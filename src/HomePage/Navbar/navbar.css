@@ -1,0 +1,22 @@
+.nav-title{    
+    color: #BC9E56 ;
+    display: flex;
+    align-items: center;
+    
+}
+
+.offcanvas-title{    
+    color: #BC9E56 ;
+}
+
+.navbar{    
+    background-color: #FFFFFF ;
+}
+
+.nav-item{    
+    color: black ;
+}
+
+#deconnexion{    
+    color:crimson ;
+}
