@@ -1,6 +1,16 @@
+import { useContext, useState } from 'react';
 import './navbar.css'
+import { AuthContext } from '../../Context/auth.context';
 
 export default function Navbar() {
+
+    const { setUser } = useContext(AuthContext);
+
+    const lastname = useContext(AuthContext).user?.user.lastname; // récupération du lastname de l'user connecté
+    const firstname = useContext(AuthContext).user?.user.firstname; // récupération du firstname de l'user connecté
+    const token = useContext(AuthContext).user?.access_token // récupération de l'access_token
+
+    const logOut = () => { setUser(null) }; // const de déconnexion
 
     return (
 
@@ -10,7 +20,8 @@ export default function Navbar() {
 
                 <div className="container-fluid">
 
-
+                    { token  &&
+                        <a className="navbar-brand" href="#">Bonjour {lastname} {firstname}</a>}
                     <h2 className="container d-flex justify-content-center nav-title">DREAMINLUXEHOTEL</h2>
 
 
@@ -40,24 +51,28 @@ export default function Navbar() {
                                 </li>
 
                                 {/* <!-- Button Login --> */}
+                                { !token  &&
                                 <li className="nav-item">
                                     <button type="button" className="btn btn-link text-black" data-bs-toggle="modal" data-bs-target="#login">Se connecter</button>
-                                </li>
+                                </li>}
 
                                 {/* <!-- Button Register --> */}
+                                { !token  &&
                                 <li className="nav-item">
                                     <button type="button" className="btn btn-link text-black" data-bs-toggle="modal" data-bs-target="#register">S'enregistrer</button>
-                                </li>                    
+                                </li>}
 
                                 {/* <!-- Button Profil --> */}
+                                { token  &&
                                 <li className="nav-item">
                                     <button type="button" className="btn btn-link text-black">Profil</button>
-                                </li>
+                                </li>}
 
                                 {/* <!-- Button Commande --> */}
+                                { token  &&
                                 <li className="nav-item">
                                     <button type="button" className="btn btn-link text-black">Mes commandes</button>
-                                </li>
+                                </li>}
 
                                 {/* <!-- Button Contact --> */}
                                 <li className="nav-item">
@@ -65,9 +80,10 @@ export default function Navbar() {
                                 </li>
 
                                 {/* <!-- Button Logout --> */}
+                                { token  &&
                                 <li className="nav-item mt-5">
-                                    <button type="button" className="btn btn-link" id="deconnexion">Déconnexion</button>
-                                </li>
+                                    <button type="button" className="btn btn-link" id="deconnexion" onClick={logOut}>Déconnexion</button>
+                                </li>}
 
                                 {/* <!-- Gestion Systeme --> */}
                                 <li className="nav-item dropdown">
