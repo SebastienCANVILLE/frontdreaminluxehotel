@@ -28,8 +28,12 @@ export default function Login() {
         };
 
         const response = await fetch('http://localhost:8000/auth/login', requestOptions);
-        const responseJson = await response.json();        
+        const responseJson = await response.json();
+        
+        console.log("RESPONSE",response,"RESPONSEJSON",responseJson);
+        
 
+        //si la reponse renvoi l' access_token de l'user connecté, alors on envoi la donnée dans le context pour la réutiliser ailleur.
         if (responseJson.access_token) {
             auth.setUser({...responseJson});
             resetInputLog()
@@ -41,11 +45,11 @@ export default function Login() {
 
     }
 
-    async function resetInputLog() { //resetInput
+    //fonction qui reset les inputs
+    async function resetInputLog() { 
         setEmailLogInput("")
         setPasswordLogInput("")
     }
-
 
     return (
         <>
@@ -56,7 +60,7 @@ export default function Login() {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h1 className="container d-flex justify-content-center modal-title fs-5" id="exampleModalLabel">Connexion</h1>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={resetInputLog}></button>
                         </div>
 
                         <div className="modal-body">
@@ -81,7 +85,7 @@ export default function Login() {
                         </div>
 
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-connect" onClick={fetchDataLog}>Se connecter</button>
+                            <button type="button" className="btn btn-connect" data-bs-dismiss="modal" aria-label="Close" onClick={fetchDataLog}>Se connecter</button>
                         </div>
                     </div>
                 </div>

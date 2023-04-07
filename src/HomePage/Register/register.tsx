@@ -9,7 +9,7 @@ type ProfilRegister = {
     civility: string,
     lastname: string;
     firstname: string,
-    adresse_line: string,
+    adress_line: string,
     zipCode: string,
     city: string,
     country: string,
@@ -43,7 +43,7 @@ export default function Register() {
             civility: civility,
             lastname: lastnameInput,
             firstname: firstnameInput,
-            adresse_line: adressInput,
+            adress_line: adressInput,
             zipCode: zipCodeInput,
             city: cityInput,
             country: countryInput,
@@ -59,6 +59,9 @@ export default function Register() {
 
         const response = await fetch('http://localhost:8000/users/register', requestOptions);
         const responseJson = await response.json();
+
+        console.log(response, responseJson);
+        
 
         //si nous avons la réponse json du register dans la console, alors nous faisons un reset des input du formulaire
         if (responseJson.statusCode === 201) {
@@ -99,7 +102,7 @@ export default function Register() {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h1 className="container d-flex justify-content-center modal-title fs-5" id="exampleModalLabel">Créer son compte</h1>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" id="close-btn" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={resetInput}></button>
                         </div>
 
                         <form className="modal-body" onSubmit={fetchDataRegister}>
@@ -109,8 +112,14 @@ export default function Register() {
                                 {/* <!-- Citizen input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regCitizen">Civilité</label>
-                                    <input type="text" className="form-control" value={civility} onChange={(event) => setCivilityInput(event.target.value)}></input>
-                                </div>
+                                    <select className="form-select form-select-sm mb-2 pb-2 pt-2" aria-label=".form-select-lg example" value={civility} onChange={(event) => setCivilityInput(event.target.value)}>
+                                        <option selected>Choisissez votre civilité</option>
+                                        <option value="Monsieur">Monsieur</option>
+                                        <option value="Madame">Madame</option>
+                                        <option value="Mademoiselle">Mademoiselle</option>
+                                    </select>
+                                    {/*                                     <input type="text" className="form-control" value={civility} onChange={(event) => setCivilityInput(event.target.value)}></input>
+ */}                                </div>
 
                                 {/* <!-- Lastname input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
@@ -185,11 +194,12 @@ export default function Register() {
 
                             </div>
 
+                            <div className="modal-footer">
+                                <button type="submit" className="btn btn-register">Valider</button>
+                            </div>
+
                         </form>
 
-                        <div className="modal-footer">
-                            <button type="submit" className="btn btn-register">Valider</button>
-                        </div>
                     </div>
                 </div>
             </div>
