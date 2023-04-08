@@ -13,6 +13,7 @@ export type Tuser = {
     user: {
         id: number,
         email: string,
+        civility: string,
         firstname: string,
         lastname: string,
         adress_line: string,
@@ -20,6 +21,7 @@ export type Tuser = {
         city: string,
         country: string,
         phone_number: string,
+        role: any,
         comments: { id: number, commentary: string }[],
         reservations: { id: number, arrival_date: Date, departure_date: Date, }[]
     },

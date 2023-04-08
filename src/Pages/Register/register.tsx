@@ -61,7 +61,7 @@ export default function Register() {
         const responseJson = await response.json();
 
         console.log(response, responseJson);
-        
+
 
         //si nous avons la réponse json du register dans la console, alors nous faisons un reset des input du formulaire
         if (responseJson.statusCode === 201) {
@@ -112,25 +112,24 @@ export default function Register() {
                                 {/* <!-- Citizen input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regCitizen">Civilité</label>
-                                    <select className="form-select form-select-sm mb-2 pb-2 pt-2" aria-label=".form-select-lg example" value={civility} onChange={(event) => setCivilityInput(event.target.value)}>
+                                    <select className="form-select form-select-sm mb-2 pb-2 pt-2" aria-label=".form-select-lg example" value={civility} onChange={(event) => setCivilityInput(event.target.value)} required>
                                         <option selected>Choisissez votre civilité</option>
                                         <option value="Monsieur">Monsieur</option>
                                         <option value="Madame">Madame</option>
                                         <option value="Mademoiselle">Mademoiselle</option>
                                     </select>
-                                    {/*                                     <input type="text" className="form-control" value={civility} onChange={(event) => setCivilityInput(event.target.value)}></input>
- */}                                </div>
+                                </div>
 
                                 {/* <!-- Lastname input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regLastname">Nom</label>
-                                    <input type="text" className="form-control" value={lastnameInput} onChange={(event) => setLastnameInput(event.target.value)}></input>
+                                    <input required type="text" className="form-control" value={lastnameInput} onChange={(event) => setLastnameInput(event.target.value)}></input>
                                 </div>
 
                                 {/* <!-- Firstname input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regFirstname">Prénom</label>
-                                    <input type="text" className="form-control" value={firstnameInput} onChange={(event) => setFirstnameInput(event.target.value)}></input>
+                                    <input required type="text" className="form-control" value={firstnameInput} onChange={(event) => setFirstnameInput(event.target.value)}></input>
                                 </div>
 
                             </div>
@@ -140,19 +139,19 @@ export default function Register() {
                                 {/* <!-- Adress input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regAdress">Adresse</label>
-                                    <input type="text" className="form-control" value={adressInput} onChange={(event) => setAdressInput(event.target.value)}></input>
+                                    <input required type="text" className="form-control" value={adressInput} onChange={(event) => setAdressInput(event.target.value)}></input>
                                 </div>
 
                                 {/* <!-- Zipcode input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regZipcode">Code postal</label>
-                                    <input type="text" className="form-control" value={zipCodeInput} onChange={(event) => setZipCodeInput(event.target.value)}></input>
+                                    <input required type="text" className="form-control" value={zipCodeInput} onChange={(event) => setZipCodeInput(event.target.value)}></input>
                                 </div>
 
                                 {/* <!-- City input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regCity">Ville</label>
-                                    <input type="text" className="form-control" value={cityInput} onChange={(event) => setCityInput(event.target.value)}></input>
+                                    <input required type="text" className="form-control" value={cityInput} onChange={(event) => setCityInput(event.target.value)}></input>
                                 </div>
                             </div>
 
@@ -161,13 +160,13 @@ export default function Register() {
                                 {/* <!-- Country input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regCountry">Pays</label>
-                                    <input type="text" className="form-control" value={countryInput} onChange={(event) => setCountryInput(event.target.value)}></input>
+                                    <input required type="text" className="form-control" value={countryInput} onChange={(event) => setCountryInput(event.target.value)}></input>
                                 </div>
 
                                 {/* <!-- Phone input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regPhone">Téléphone</label>
-                                    <input type="text" className="form-control" value={phoneInput} onChange={(event) => setPhoneInput(event.target.value)}></input>
+                                    <input required type="text" className="form-control" value={phoneInput} onChange={(event) => setPhoneInput(event.target.value)}></input>
                                 </div>
 
                             </div>
@@ -177,19 +176,19 @@ export default function Register() {
                                 {/* <!-- Lastname input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regLastname">Email</label>
-                                    <input type="email" className="form-control" value={emailInput} onChange={(event) => setEmailInput(event.target.value)}></input>
+                                    <input required type="email" className="form-control" value={emailInput} onChange={(event) => setEmailInput(event.target.value)}></input>
                                 </div>
 
                                 {/* <!-- Password input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regPassword">Mot de passe</label>
-                                    <input type="password" className="form-control" value={passwordInput} onChange={(event) => setPasswordInput(event.target.value)}></input>
+                                    <input required type="password" className="form-control" value={passwordInput} onChange={(event) => setPasswordInput(event.target.value)}></input>
                                 </div>
 
                                 {/* <!-- Password confirm input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regPasswordConfirm">Confirmation mot de passe</label>
-                                    <input type="password" className="form-control" value={passwordConfirmInput} onChange={(event) => setPasswordConfirmInput(event.target.value)}></input>
+                                    <input required type="password" className="form-control" value={passwordConfirmInput} onChange={(event) => setPasswordConfirmInput(event.target.value)}></input>
                                 </div>
 
                             </div>
