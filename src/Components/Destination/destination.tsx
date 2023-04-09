@@ -1,4 +1,4 @@
-import HotelCard from '../Hotel Card/hotelCard'
+import HotelCard from '../Card Destination/cardDestination'
 import './destination.css'
 
 export default function Destination() {
