@@ -41,7 +41,7 @@ export default function Navbar() {
                             <h2 className="container justify-content-center nav-title px-0 mx-0">DREAMINLUXEHOTEL</h2>
                         </div>
 
-                        <div className="col-md-3 mt-1 px-0 mx-0">
+                        <div className="col-md-3 px-0 mx-0">
                             <button className="navbar-toggler float-end me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                                 <span className="navbar-toggler-icon"></span>
                             </button>
@@ -66,8 +66,15 @@ export default function Navbar() {
 
                                 {/* <!-- Button Check Reservation --> */}
                                 <li className="nav-item">
+                                    <button type="button" className="btn btn-link text-black" data-bs-toggle="modal" data-bs-target="#modaldestination">
+                                        Nos destinations
+                                    </button>
+                                </li>
+
+                                {/* <!-- Button Check Reservation --> */}
+                                <li className="nav-item">
                                     <button type="button" className="btn btn-link text-black">
-                                        <i className="bi bi-cart"> Ma réservation</i>
+                                        <i className="bi bi-cart"> Panier réservation</i>
                                     </button>
                                 </li>
 
@@ -92,7 +99,7 @@ export default function Navbar() {
                                 {/* <!-- Button Commande --> */}
                                 {token &&
                                     <li className="nav-item">
-                                        <button type="button" className="btn btn-link text-black">Mes commandes</button>
+                                        <button type="button" className="btn btn-link text-black">Mes réservations</button>
                                     </li>}
 
                                 {/* <!-- Button Contact --> */}
@@ -115,7 +122,7 @@ export default function Navbar() {
                                 {token && role !== "user" && <li className="nav-item">
                                     <button type="button" className="btn btn-link text-black">Consultant</button>
                                 </li>}
-                                
+
 
                             </ul>
                         </div>

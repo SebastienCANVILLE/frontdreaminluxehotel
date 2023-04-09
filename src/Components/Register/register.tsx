@@ -97,7 +97,7 @@ export default function Register() {
         <>
 
             {/* <!-- Modal --> */}
-            <div className="modal fade" id="register" tabIndex={-1} aria-labelledby="register" aria-hidden="true">
+            <div className="modal fade" id="register" tabIndex={-1} data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
                         <div className="modal-header">

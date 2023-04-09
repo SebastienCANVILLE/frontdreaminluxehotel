@@ -55,7 +55,7 @@ export default function Login() {
         <>
 
             {/* <!-- Modal --> */}
-            <div className="modal fade" id="login" tabIndex={-1} aria-labelledby="login" aria-hidden="true">
+            <div className="modal fade" id="login" tabIndex={-1} data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog">{/* modal-dialog-centered */}
                     <div className="modal-content">
                         <div className="modal-header">

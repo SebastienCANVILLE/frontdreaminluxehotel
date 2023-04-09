@@ -1,7 +1,9 @@
-import Footer from './Footer/footer';
-import Login from './Login/login';
-import Navbar from './Navbar/navbar';
-import Register from './Register/register';
+import Destination from '../Components/Destination/destination';
+import Footer from '../Components/Footer/footer';
+import HotelCard from '../Components/Hotel Card/hotelCard';
+import Login from '../Components/Login/login';
+import Navbar from '../Components/Navbar/navbar';
+import Register from '../Components/Register/register';
 import './homePage.css'
 
 export default function HomePage() {
@@ -16,6 +18,8 @@ export default function HomePage() {
                 <Navbar></Navbar>
                 <Register></Register>
                 <Login></Login>
+                <Destination></Destination>
+                {/* <HotelCard></HotelCard> */}
                 <Footer></Footer>
 
 
