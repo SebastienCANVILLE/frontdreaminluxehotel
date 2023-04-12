@@ -1,7 +1,27 @@
-import HotelCard from '../Card Destination/cardDestination'
+import { useContext, useEffect, useState } from 'react';
 import './destination.css'
+import CardDestination from '../Card Destination/cardDestination';
+import { HotelContext, Thotel } from '../../Context/hotel.context';
 
 export default function Destination() {
+
+    const [hotels, setHotels] = useState<Thotel[] | null>(null);
+
+    useEffect(() => {
+        async function getHotels() {
+            const requestOptions = {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            }
+
+            const response = await fetch('http://localhost:8000/hotels', requestOptions)
+            const responseJson = await response.json();
+            console.log(responseJson);
+            setHotels(responseJson.data);
+        };
+        getHotels()
+    }, []);
+
 
     return (
 
@@ -29,14 +49,17 @@ export default function Destination() {
                             <div id="carouselExample" className="carousel slide">
                                 <div className="carousel-inner">
 
-                                    <div className="carousel-item active">
-                                        <HotelCard></HotelCard>
-                                    </div>
-
-                                    <div className="carousel-item">
-                                        <HotelCard></HotelCard>
-                                    </div>
-
+                                    {/* // item = un element du tableau soit un hotel en entier (id, name ect...) et index = 0/1/2 du tableau */}
+                                    {hotels?.map((item, index) => {
+                                        return <div className={`carousel-item ${index === 0 ? "active" : ""}`} key={item.id}>
+                                            <CardDestination hotel={item}></CardDestination>
+                                        </div>
+                                    })}
+{/*                                     {hotels?.map((item, index) => {
+                                        return <div className="carousel-item">
+                                            <CardDestination hotel={item}></CardDestination>
+                                        </div>
+})} */}
                                 </div>
 
                                 {/* <!-- Buttom previous --> */}
@@ -66,3 +89,4 @@ export default function Destination() {
     )
 
 }
+

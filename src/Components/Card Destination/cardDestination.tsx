@@ -1,7 +1,14 @@
+import { useContext } from 'react';
 import './cardDestination.css'
+import { HotelContext, Thotel } from '../../Context/hotel.context';
 
-export default function CardDestination() {
+/** 
+ * @function CardDestination
+ *  component enfant permettant d'incrémenter chaque card, d'un hotel existant dans le components parents Card destination
+*/
+export default function CardDestination(props:{hotel :Thotel}) {
 
+    //const { hotel } = useContext(HotelContext);
 
     return (
 
@@ -12,7 +19,7 @@ export default function CardDestination() {
                     <div className="card">
                         <img src="/photos/LogoHotel.jpg" className="card-img-top" alt="..."></img>
                         <div className="card-body">
-                            <h5 className="card-titleHotel text-center">Ville</h5>
+                            <h5 className="card-titleHotel text-center">{props.hotel.city}</h5>
                         </div>
                     </div>
                 </a>

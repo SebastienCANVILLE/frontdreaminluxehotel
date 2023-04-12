@@ -10,7 +10,7 @@ import { createContext } from "react";
  * ici soit l'user, soit une valeur null et nous créons une constante Auth qui renvoi par défaut une valeur null.
  */
 export type Thotel = {
-    hotel: {
+    
         id: number,
         photo: string,
         name_hotel: string,
@@ -19,9 +19,7 @@ export type Thotel = {
         phone_number: string,
         city: string,      
         comments: { id: number, commentary: string }[],
-        reservations: { id: number, photo: string, name: string, number_room: string, price: number }[]
-    },
-    
+        reservations: { id: number, photo: string, name: string, number_room: string, price: number }[]   
 }
 
 export interface IHotelContext {

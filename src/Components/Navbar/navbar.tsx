@@ -64,7 +64,7 @@ export default function Navbar() {
 
                             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
 
-                                {/* <!-- Button Check Reservation --> */}
+                                {/* <!-- Button My Reservation --> */}
                                 <li className="nav-item">
                                     <button type="button" className="btn btn-link text-black" data-bs-toggle="modal" data-bs-target="#modaldestination">
                                         Nos destinations
