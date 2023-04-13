@@ -1,6 +1,5 @@
-import Destination from '../Components/Destination/destination';
+import Destination from '../Components/Modal_Destination/destination';
 import Footer from '../Components/Footer/footer';
-import HotelCard from '../Components/Card Destination/cardDestination';
 import Login from '../Components/Login/login';
 import Navbar from '../Components/Navbar/navbar';
 import Register from '../Components/Register/register';
@@ -19,9 +18,7 @@ export default function HomePage() {
                 <Register></Register>
                 <Login></Login>
                 <Destination></Destination>
-                {/* <HotelCard></HotelCard> */}
                 <Footer></Footer>
-
 
             </div>
 

@@ -1,8 +1,16 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Thotel } from '../../Context/hotel.context';
+import HotelCard from '../Hotel_Card/hotelCard';
 import './destination.css'
-import CardDestination from '../Card Destination/cardDestination';
-import { HotelContext, Thotel } from '../../Context/hotel.context';
 
+
+/**
+ * @function Destination
+ * 
+ * * Component parents qui récupère les components hotelCard et roomCard
+ * * Système d'affichage par caroussel Bootstrp 5
+ * * 
+ */
 export default function Destination() {
 
     const [hotels, setHotels] = useState<Thotel[] | null>(null);
@@ -29,14 +37,14 @@ export default function Destination() {
 
             {/* <!-- Buttom Trigger Modal --> */}
             <div className="container-fluid btn-destPos d-flex justify-content-center">
-                <button type="button" className="btn-destination btn align-items-center " data-bs-toggle="modal" data-bs-target="#modaldestination">
+                <button type="button" className="btn-destination btn align-items-center" data-bs-toggle="modal" data-bs-target="#modaldestination">
                     Nos destinations
                 </button>
             </div>
 
             {/* <!-- Modal --> */}
             <div className="modal fade" id="modaldestination" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div className="modal-dialog modal-dialog modal-dialog-centered modal-lg">
+                <div className="modal-dialog modal-dialog modal-dialog-centered modal-xl">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h1 className="modal-title container d-flex justify-content-center fs-5" id="staticBackdropLabel">Nos destinations</h1>
@@ -50,16 +58,13 @@ export default function Destination() {
                                 <div className="carousel-inner">
 
                                     {/* // item = un element du tableau soit un hotel en entier (id, name ect...) et index = 0/1/2 du tableau */}
-                                    {hotels?.map((item, index) => {
-                                        return <div className={`carousel-item ${index === 0 ? "active" : ""}`} key={item.id}>
-                                            <CardDestination hotel={item}></CardDestination>
+                                    {/* <!-- Hotel CArd --> */}
+                                    {hotels?.map((item, index) =>
+                                        <div className={`carousel-item ${index === 0 ? "active" : ""}`} key={item.id}>
+                                            <HotelCard hotel={item}></HotelCard>
                                         </div>
-                                    })}
-{/*                                     {hotels?.map((item, index) => {
-                                        return <div className="carousel-item">
-                                            <CardDestination hotel={item}></CardDestination>
-                                        </div>
-})} */}
+                                    )}
+
                                 </div>
 
                                 {/* <!-- Buttom previous --> */}
@@ -85,7 +90,9 @@ export default function Destination() {
                     </div>
                 </div>
             </div >
+
         </>
+        
     )
 
 }

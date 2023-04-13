@@ -7,7 +7,7 @@
 
 .btn-destPos {
     position: fixed;
-    margin-top: 100px;
+    margin-top: 150px;
 }
 
 .carousel-control-prev-icon{
@@ -16,4 +16,8 @@
 
 .carousel-control-next-icon{
     background-color: black !important;
+}
+
+.modal-title{
+    font-size: 80px;  
 }
