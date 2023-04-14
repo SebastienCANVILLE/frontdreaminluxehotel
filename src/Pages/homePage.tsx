@@ -3,6 +3,7 @@ import Footer from '../Components/Footer/footer';
 import Login from '../Components/Login/login';
 import Navbar from '../Components/Navbar/navbar';
 import Register from '../Components/Register/register';
+import Reservation from '../Components/Reservation/reservation';
 import './homePage.css'
 
 export default function HomePage() {
@@ -18,6 +19,7 @@ export default function HomePage() {
                 <Register></Register>
                 <Login></Login>
                 <Destination></Destination>
+                <Reservation></Reservation>
                 <Footer></Footer>
 
             </div>

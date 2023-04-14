@@ -44,7 +44,7 @@ export default function Destination() {
 
             {/* <!-- Modal --> */}
             <div className="modal fade" id="modaldestination" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div className="modal-dialog modal-dialog modal-dialog-centered modal-xl">
+                <div className="modal-dialog modal-dialog modal-dialog-centered modal-lg">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h1 className="modal-title container d-flex justify-content-center fs-5" id="staticBackdropLabel">Nos destinations</h1>
