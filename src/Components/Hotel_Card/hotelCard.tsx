@@ -15,7 +15,6 @@ export default function HotelCard(props: { hotel: Thotel }) {
     // const permettant d'ouvrir et fermer la partie détails de HotelCArd
     const [showDetails, setShowDetails] = useState(false);
 
-
     const OpenDetails = () => {//permet d'ouvrir et de fermer directement depuis le btn a href
         setShowDetails(!showDetails);
     }
@@ -28,7 +27,6 @@ export default function HotelCard(props: { hotel: Thotel }) {
 
         <div className="row-fluid d-flex justify-content-center">
             <div className="col-md-8 col-12">
-
 
                 {/* Btn Card Hotel*/}
                 <a href="#" className="btn mt-3 mb-3" onClick={OpenDetails}>
@@ -44,9 +42,6 @@ export default function HotelCard(props: { hotel: Thotel }) {
 
                 {/* Open Details */}
                 {showDetails &&
-
-
-
                     <div className="card-details">
                         <div className="row">
 

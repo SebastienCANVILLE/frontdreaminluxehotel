@@ -1,4 +1,7 @@
+import { useContext, useEffect, useState } from 'react';
 import './reservation.css'
+import { Thotel, Troom } from '../../Context/hotel.context';
+import { AuthContext } from '../../Context/auth.context';
 
 
 /**
@@ -7,9 +10,137 @@ import './reservation.css'
  * * Component parents qui récupère les components hotelCard et roomCard
  * * Système d'affichage par caroussel Bootstrp 5
  * * 
- */
+*/
+type ProfilReservation = {
+    reference: string,
+    arrival_date: Date,
+    departure_date: Date,
+    roomId: number
+}
+
 export default function Reservation() {
 
+    const token = useContext(AuthContext).user?.access_token
+    //console.log("LE TOKEN",token);
+
+
+    const [hotels, setHotels] = useState<Thotel[] | null>(null);
+    const [rooms, setRooms] = useState<Troom[] | null>(null);
+    //console.log("LA ROOM", rooms);
+
+    const [references, setReferences] = useState("");
+    const [roomIdInput, setRoomIdInput] = useState(0);
+    const [arrivalDateInput, setArrivalDateInput] = useState("");//new Date()
+    const [departureDateInput, setDepartureDateInput] = useState("");//new Date()
+    console.log("LA ROOM", roomIdInput);
+    useEffect(() => {
+        async function getHotels() {
+            const requestOptions = {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            }
+
+            const response = await fetch('http://localhost:8000/hotels', requestOptions)
+            const responseJson = await response.json();
+            console.log(responseJson);
+            setHotels(responseJson.data);
+        };
+        getHotels()
+    }, []);
+
+
+    /**  
+     * @function handleSelectHotel
+     * 
+     * * fonction permettant de trouver l'id de l'hotel selectionné dans le select hotels.map et ensuite de renvoyer les chambres de cet hotel
+    */
+    function handleSelectHotel(hotelId: number) {
+
+        if (hotels) {
+            const selectedHotel = hotels.find((item) => item.id === hotelId);
+            if (selectedHotel) {
+                const selectedRooms = selectedHotel.rooms;
+                setRooms(selectedRooms);
+            }
+        }
+    }
+
+    /**  
+     * @function handleSelectRoom
+     * 
+     * * fonction permettant de trouver l'id de la room selectionnée dans le select rooms.map et ensuite de renvoyer la chambre dans le body
+    */
+    function handleSelectRoom(roomId: number) {
+
+        if (rooms) {
+            const selectedRoom = rooms.find((item) => item.id === roomId);
+            if (selectedRoom) {
+                const selectedRooms = selectedRoom.id;
+                setRoomIdInput(selectedRooms);
+            }
+        }
+    }
+
+    /**  
+        * @function reservationRegister
+        * 
+        * fonction permettant de trouver de créer une réservation
+        * 
+        * * Renvoyer un message d'erreur ou de succès
+       */
+    async function reservationRegister(event: { preventDefault: () => void; }) {
+
+        event.preventDefault()
+
+        // body du register sur la partie html
+        const body/* : ProfilReservation */ = {
+            reference: references,
+            arrival_date: arrivalDateInput,
+            departure_date: departureDateInput,
+            roomId: roomIdInput
+        }
+
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(body)
+        }
+
+        const response = await fetch('http://localhost:8000/reservations', requestOptions)
+        const responseJson = await response.json();
+        console.log("RESERVATION", responseJson);
+
+        if (responseJson.statusCode === 201) {
+            resetInput()
+            alert("Réservation créé avec succès");
+        }
+
+        else if (responseJson.statusCode === 400) {
+            alert("La chambre n'est pas disponible pour ces dates");
+        }
+        else {
+            return
+        }
+
+    };
+
+    // function qui reset les imputs du modal reservation
+    async function resetInput() { 
+
+        setReferences("")
+        setRoomIdInput(0)
+        setArrivalDateInput("")
+        setDepartureDateInput("")
+        setHotels(null)
+        setRooms(null)
+
+
+        document.getElementById('close-btn')?.click()
+
+    }
 
 
 
@@ -33,21 +164,38 @@ export default function Reservation() {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" /* onClick={resetInputLog} */></button>
                         </div>
 
-                        <div className="modal-body">
-
+                        {/* <!-- Formulaire de réservation --> */}
+                        <form className="modal-body" onSubmit={reservationRegister}>
 
                             <div className="row">
 
                                 {/* <!-- Select Hotel input --> */}
                                 <div className="form-outline col-md-6 col-12 mb-3 mt-1">
+
                                     <label htmlFor="regAdress">Choisissez votre hotel</label>
-                                    <input required type="text" className="form-control" /* value={adressInput} onChange={(event) => setAdressInput(event.target.value)} */></input>
+
+                                    <select className="form-select form-select-sm mb-2 pb-2 pt-2" aria-label=".form-select-lg example" required onChange={(event) => handleSelectHotel(+event.target.value)}>
+                                        <option selected>Choisissez votre hotel</option>
+                                        {hotels?.map((item, index) =>
+                                            <option key={index} value={item.id}>{item.name_hotel}</option>
+                                        )}
+
+                                    </select>
+
                                 </div>
 
                                 {/* <!-- Select Room input --> */}
                                 <div className="form-outline col-md-6 col-12 mb-3 mt-1">
-                                    <label htmlFor="regZipcode">Choisissez votre chambre</label>
-                                    <input required type="text" className="form-control" /* value={zipCodeInput} onChange={(event) => setZipCodeInput(event.target.value)} */></input>
+
+                                    <label htmlFor="regAdress">Choisissez votre chambre</label>
+
+                                    <select className="form-select form-select-sm mb-2 pb-2 pt-2" aria-label=".form-select-lg example" required onChange={(event) => handleSelectRoom(+event.target.value)}>
+                                        <option selected>Choisissez votre chambre</option>
+                                        {rooms?.map((item, index) =>
+                                            <option key={index} value={item.id}>{item.name}</option>
+                                        )}
+                                    </select>
+
                                 </div>
 
                             </div>
@@ -56,26 +204,27 @@ export default function Reservation() {
 
                                 {/* <!-- Arrived input --> */}
                                 <div className="form-outline col-md-6 col-12 mb-3 mt-1">
-                                    <label htmlFor="regCountry">Votre date d'arrivée</label>
-                                    <input required type="text" className="form-control" /* value={countryInput} onChange={(event) => setCountryInput(event.target.value)} */></input>
+                                    <label htmlFor="regArrival">Votre date d'arrivée</label>
+                                    <input required type="date" className="form-control" value={arrivalDateInput} onChange={(event) => setArrivalDateInput(event.target.value)}></input>
                                 </div>
 
-                                {/* <!-- Depature input --> */}
+                                {/* <!-- Departure input --> */}
                                 <div className="form-outline col-md-6 col-12 mb-3 mt-1">
-                                    <label htmlFor="regPhone">Votre date de départ</label>
-                                    <input required type="text" className="form-control" /* value={phoneInput} onChange={(event) => setPhoneInput(event.target.value)} */></input>
+                                    <label htmlFor="regDeparture">Votre date de départ</label>
+                                    <input required type="date" className="form-control" value={departureDateInput} onChange={(event) => setDepartureDateInput(event.target.value)}></input>
                                 </div>
 
                             </div>
 
-                        </div>
+                            <div className="modal-footer">
+                                <button type="submit" className="btn btn-connect" data-bs-dismiss="modal" aria-label="Close">Valider</button>
+                            </div>
 
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-connect" data-bs-dismiss="modal" aria-label="Close">Valider</button>
-                        </div>
+                        </form>
+
                     </div>
                 </div>
-            </div>
+            </div >
 
         </>
 

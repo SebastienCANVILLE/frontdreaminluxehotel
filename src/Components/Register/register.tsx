@@ -62,7 +62,6 @@ export default function Register() {
 
         console.log(response, responseJson);
 
-
         //si nous avons la réponse json du register dans la console, alors nous faisons un reset des input du formulaire
         if (responseJson.statusCode === 201) {
             resetInput()

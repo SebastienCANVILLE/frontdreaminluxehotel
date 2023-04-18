@@ -10,13 +10,14 @@ import './roomCard.css';
  * * Fonction Zoom implémenté pour chaque image de la chambre
 */
 export default function RoomCard(props: { room: Troom }) {
+
     const [zoomed, setZoomed] = useState(false);
 
     const handleClick = () => {
         setZoomed(!zoomed);
     };
 
-    // définir la constante en fonction de l'état de "zoomed" 80% prise de largeur de l'cran en zoom et 100% en dézoom initiale
+    // définir la constante en fonction de l'état de "zoomed" 80% prise de largeur de l'écran en zoom et 100% en dézoom initiale
     const zoom = zoomed ? '80%' : '100%';
 
     return (
