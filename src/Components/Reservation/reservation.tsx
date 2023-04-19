@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
-import './reservation.css'
 import { Thotel, Troom } from '../../Context/hotel.context';
 import { AuthContext } from '../../Context/auth.context';
+import './reservation.css'
 
 
 /**
@@ -13,16 +13,14 @@ import { AuthContext } from '../../Context/auth.context';
 */
 type ProfilReservation = {
     reference: string,
-    arrival_date: Date,
-    departure_date: Date,
+    arrival_date: string,
+    departure_date: string,
     roomId: number
 }
 
 export default function Reservation() {
 
-    const token = useContext(AuthContext).user?.access_token
-    //console.log("LE TOKEN",token);
-
+    const { user } = useContext(AuthContext);
 
     const [hotels, setHotels] = useState<Thotel[] | null>(null);
     const [rooms, setRooms] = useState<Troom[] | null>(null);
@@ -30,9 +28,9 @@ export default function Reservation() {
 
     const [references, setReferences] = useState("");
     const [roomIdInput, setRoomIdInput] = useState(0);
-    const [arrivalDateInput, setArrivalDateInput] = useState("");//new Date()
-    const [departureDateInput, setDepartureDateInput] = useState("");//new Date()
-    console.log("LA ROOM", roomIdInput);
+    const [arrivalDateInput, setArrivalDateInput] = useState<string | undefined>("");
+    const [departureDateInput, setDepartureDateInput] = useState<string | undefined>("");
+    //console.log("LA ROOM", roomIdInput);
     useEffect(() => {
         async function getHotels() {
             const requestOptions = {
@@ -92,57 +90,71 @@ export default function Reservation() {
 
         event.preventDefault()
 
-        // body du register sur la partie html
-        const body/* : ProfilReservation */ = {
-            reference: references,
-            arrival_date: arrivalDateInput,
-            departure_date: departureDateInput,
-            roomId: roomIdInput
-        }
 
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify(body)
-        }
+        let body: ProfilReservation;
 
-        const response = await fetch('http://localhost:8000/reservations', requestOptions)
-        const responseJson = await response.json();
-        console.log("RESERVATION", responseJson);
+        // condition qui vérifie que les input ne soit pas undefined en front et return le body si les conditions sont remplies
+        if (arrivalDateInput !== undefined && departureDateInput !== undefined && roomIdInput !== undefined) {
 
-        if (responseJson.statusCode === 201) {
-            resetInput()
-            alert("Réservation créé avec succès");
-        }
+            if (new Date(arrivalDateInput) < new Date(Date.now())) {
+                alert("La date d'arrivée ne peut pas être antérieure à celle aujourd'hui");
+                return
+            }
 
-        else if (responseJson.statusCode === 400) {
-            alert("La chambre n'est pas disponible pour ces dates");
-        }
-        else {
-            return
-        }
+            // body du register sur la partie html
+            body = {
+                reference: references,
+                arrival_date: arrivalDateInput,
+                departure_date: departureDateInput,
+                roomId: roomIdInput
+            }
 
+
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${user?.access_token}`
+                },
+                body: JSON.stringify(body)
+            }
+
+            const response = await fetch('http://localhost:8000/reservations', requestOptions)
+            const responseJson = await response.json();
+            console.log("RESERVATION", responseJson);
+
+
+            if (responseJson.statusCode === 201) {
+                resetInput()
+                alert("Réservation créé avec succès");
+            }
+
+            else if (responseJson.message === "La date de départ doit être supérieure à la date d'arrivée") {
+                alert("La date de départ doit être supérieure à la date d'arrivée");
+            }
+
+            else if (responseJson.message === "La chambre n'est pas disponible pour ces dates") {
+                alert("La chambre n'est pas disponible pour ces dates");
+            }
+
+            else{
+                return
+            }
+
+        }
     };
 
     // function qui reset les imputs du modal reservation
-    async function resetInput() { 
+    async function resetInput() {
 
         setReferences("")
         setRoomIdInput(0)
-        setArrivalDateInput("")
-        setDepartureDateInput("")
+        setArrivalDateInput(undefined)
+        setDepartureDateInput(undefined)
         setHotels(null)
         setRooms(null)
 
-
-        document.getElementById('close-btn')?.click()
-
     }
-
-
 
     return (
 
@@ -205,13 +217,13 @@ export default function Reservation() {
                                 {/* <!-- Arrived input --> */}
                                 <div className="form-outline col-md-6 col-12 mb-3 mt-1">
                                     <label htmlFor="regArrival">Votre date d'arrivée</label>
-                                    <input required type="date" className="form-control" value={arrivalDateInput} onChange={(event) => setArrivalDateInput(event.target.value)}></input>
+                                    <input required type="date" className="form-control" onChange={(event) => setArrivalDateInput(event.target.value)}></input>
                                 </div>
 
                                 {/* <!-- Departure input --> */}
                                 <div className="form-outline col-md-6 col-12 mb-3 mt-1">
                                     <label htmlFor="regDeparture">Votre date de départ</label>
-                                    <input required type="date" className="form-control" value={departureDateInput} onChange={(event) => setDepartureDateInput(event.target.value)}></input>
+                                    <input required type="date" className="form-control" onChange={(event) => setDepartureDateInput(event.target.value)}></input>
                                 </div>
 
                             </div>

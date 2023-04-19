@@ -20,7 +20,7 @@ export type Thotel = {
     city: string,
     comments: { id: number, commentary: string }[],
     rooms: Troom [],
-    reservations: { id: number, photo: string, name: string, number_room: string, price: number }[]
+    reservations: { id: number, reference: string, arrival_date: string, departure_date: string }[]
 }
 
 export type Troom = {
