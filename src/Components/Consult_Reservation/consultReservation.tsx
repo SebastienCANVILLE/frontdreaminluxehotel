@@ -41,8 +41,7 @@ export default function ConsultReservation() {
                                         <th scope="col">Chambre</th>
                                         <th scope="col">Date d'arrivée</th>
                                         <th scope="col">Date de départ</th>
-                                        <th scope="col">Prix</th>
-                                        
+                                        <th scope="col">Prix</th>                                        
                                     </tr>
                                 </thead>
 

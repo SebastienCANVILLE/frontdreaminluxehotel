@@ -68,13 +68,13 @@ export default function Login() {
                             {/* <!-- Email input --> */}
                             <label htmlFor="signUpEmail">Email</label>
                             <div className="form-outline mb-3 mt-1">
-                                <input type="email" className="form-control" value={emailInput} onChange={(event) => setEmailLogInput(event.target.value)}></input>
+                                <input type="email" id="signUpEmail" className="form-control" aria-label="Saisissez votre email"value={emailInput} onChange={(event) => setEmailLogInput(event.target.value)}></input>
                             </div>
 
                             {/* <!-- Password input --> */}
                             <label htmlFor="signUpPassword">Mot de passe</label>
                             <div className="form-outline mb-3 mt-1">
-                                <input type="password" className="form-control" value={passwordInput} onChange={(event) => setPasswordLogInput(event.target.value)}></input>
+                                <input type="password" id="signUpEmail" className="form-control" aria-label="Saisissez votre mot de passe" value={passwordInput} onChange={(event) => setPasswordLogInput(event.target.value)}></input>
                             </div>
 
                             {/* <!-- Password Link --> */}

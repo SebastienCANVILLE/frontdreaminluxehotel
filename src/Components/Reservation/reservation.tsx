@@ -23,14 +23,14 @@ export default function Reservation() {
     const { user } = useContext(AuthContext);
 
     const [hotels, setHotels] = useState<Thotel[] | null>(null);
-    const [rooms, setRooms] = useState<Troom[] | null>(null);
-    //console.log("LA ROOM", rooms);
+    const [rooms, setRooms] = useState<Troom[] | null>(null);    
 
     const [references, setReferences] = useState("");
+    const [hotelInput, setHotelInput] = useState(0); // ce useState sert uniquement à remettre la valeur de l'input hotel à l'initiale après réservation avec la fontion resetInput()
     const [roomIdInput, setRoomIdInput] = useState(0);
-    const [arrivalDateInput, setArrivalDateInput] = useState<string | undefined>("");
-    const [departureDateInput, setDepartureDateInput] = useState<string | undefined>("");
-    //console.log("LA ROOM", roomIdInput);
+    const [arrivalDateInput, setArrivalDateInput] = useState<string>("");
+    const [departureDateInput, setDepartureDateInput] = useState<string>("");
+   
     useEffect(() => {
         async function getHotels() {
             const requestOptions = {
@@ -59,6 +59,7 @@ export default function Reservation() {
             if (selectedHotel) {
                 const selectedRooms = selectedHotel.rooms;
                 setRooms(selectedRooms);
+                setHotelInput(hotelId);
             }
         }
     }
@@ -94,11 +95,11 @@ export default function Reservation() {
         let body: ProfilReservation;
 
         // condition qui vérifie que les input ne soit pas undefined en front et return le body si les conditions sont remplies
-        if (arrivalDateInput !== undefined && departureDateInput !== undefined && roomIdInput !== undefined) {
-
+        if (arrivalDateInput !== "" && departureDateInput !== "" && roomIdInput !== 0) {
+            
             if (new Date(arrivalDateInput) < new Date(Date.now())) {
-                alert("La date d'arrivée ne peut pas être antérieure à celle aujourd'hui");
-                return
+                alert("La date choisie ne peut pas être antérieure à celle aujourd'hui");
+                return                
             }
 
             // body du register sur la partie html
@@ -124,35 +125,43 @@ export default function Reservation() {
             console.log("RESERVATION", responseJson);
 
 
-            if (responseJson.statusCode === 201) {
-                resetInput()
-                alert("Réservation créé avec succès");
+            if (responseJson.statusCode === 401) {                
+                alert("Veuillez vous connecter avant de valider votre réservation");                
             }
 
-            else if (responseJson.message === "La date de départ doit être supérieure à la date d'arrivée") {
-                alert("La date de départ doit être supérieure à la date d'arrivée");
+            if (responseJson.statusCode === 201) {
+                resetInput() 
+                alert("Réservation créé avec succès");                
             }
+            
+            else if (responseJson.message === "La date de départ doit être supérieure à la date d'arrivée") {
+                alert(responseJson.message);
+            }            
 
             else if (responseJson.message === "La chambre n'est pas disponible pour ces dates") {
-                alert("La chambre n'est pas disponible pour ces dates");
-            }
-
-            else{
+                alert(responseJson.message);
+            } 
+            else {
                 return
             }
-
+            
+        } 
+        else {
+            alert("Veuillez renseigner tous les champs"); 
+            return
         }
+
     };
 
     // function qui reset les imputs du modal reservation
     async function resetInput() {
 
         setReferences("")
+        setHotelInput(0)
         setRoomIdInput(0)
-        setArrivalDateInput(undefined)
-        setDepartureDateInput(undefined)
-        setHotels(null)
-        setRooms(null)
+        setArrivalDateInput("")
+        setDepartureDateInput("") 
+        
 
     }
 
@@ -184,12 +193,12 @@ export default function Reservation() {
                                 {/* <!-- Select Hotel input --> */}
                                 <div className="form-outline col-md-6 col-12 mb-3 mt-1">
 
-                                    <label htmlFor="regAdress">Choisissez votre hotel</label>
+                                    <label htmlFor="regHotel">Choisissez votre hotel</label>
 
-                                    <select className="form-select form-select-sm mb-2 pb-2 pt-2" aria-label=".form-select-lg example" required onChange={(event) => handleSelectHotel(+event.target.value)}>
-                                        <option selected>Choisissez votre hotel</option>
+                                    <select className="form-select form-select-sm mb-2 pb-2 pt-2" id="regHotel" aria-label="choisissez votre hotel" required value={hotelInput} onChange={(event) => handleSelectHotel(+event.target.value)}>
+                                        <option key="selectHotel" value={0}>Choisissez votre hotel</option>
                                         {hotels?.map((item, index) =>
-                                            <option key={index} value={item.id}>{item.name_hotel}</option>
+                                            <option key={`selectHotel-${index}`} value={item.id}>{item.name_hotel}</option>
                                         )}
 
                                     </select>
@@ -199,12 +208,12 @@ export default function Reservation() {
                                 {/* <!-- Select Room input --> */}
                                 <div className="form-outline col-md-6 col-12 mb-3 mt-1">
 
-                                    <label htmlFor="regAdress">Choisissez votre chambre</label>
+                                    <label htmlFor="regRoom">Choisissez votre chambre</label>
 
-                                    <select className="form-select form-select-sm mb-2 pb-2 pt-2" aria-label=".form-select-lg example" required onChange={(event) => handleSelectRoom(+event.target.value)}>
-                                        <option selected>Choisissez votre chambre</option>
+                                    <select className="form-select form-select-sm mb-2 pb-2 pt-2" id="regRoom" aria-label="choisissez votre chambre" /* required */ value={roomIdInput} onChange={(event) => handleSelectRoom(+event.target.value)}>
+                                        <option selected key="selectRoom" value={0}>Choisissez votre chambre</option>
                                         {rooms?.map((item, index) =>
-                                            <option key={index} value={item.id}>{item.name}</option>
+                                            <option key={`selectRoom-${index}`} value={item.id}>{item.name}</option>
                                         )}
                                     </select>
 
@@ -217,19 +226,19 @@ export default function Reservation() {
                                 {/* <!-- Arrived input --> */}
                                 <div className="form-outline col-md-6 col-12 mb-3 mt-1">
                                     <label htmlFor="regArrival">Votre date d'arrivée</label>
-                                    <input required type="date" className="form-control" onChange={(event) => setArrivalDateInput(event.target.value)}></input>
+                                    <input id="regArrival" type="date" className="form-control" aria-label="choisissez votre date d'arrivée" value={arrivalDateInput} onChange={(event) => setArrivalDateInput(event.target.value)}></input>
                                 </div>
 
                                 {/* <!-- Departure input --> */}
                                 <div className="form-outline col-md-6 col-12 mb-3 mt-1">
                                     <label htmlFor="regDeparture">Votre date de départ</label>
-                                    <input required type="date" className="form-control" onChange={(event) => setDepartureDateInput(event.target.value)}></input>
+                                    <input id="regDeparture" type="date" className="form-control" aria-label="choisissez votre date de départ" value={departureDateInput} onChange={(event) => setDepartureDateInput(event.target.value)}></input>
                                 </div>
 
                             </div>
 
-                            <div className="modal-footer">
-                                <button type="submit" className="btn btn-connect" data-bs-dismiss="modal" aria-label="Close">Valider</button>
+                            <div className="modal-footer">{/* {`carousel-item `} */}
+                                <button type="submit" className="btn btn-connect" >Valider</button>
                             </div>
 
                         </form>
@@ -243,3 +252,14 @@ export default function Reservation() {
     )
 
 }
+
+
+/* enum CodeError {
+    arrivalDateSupDepartureDate = 'arrivalDateSupDepartureDate',
+    roomUnailableForTheseDates = 'roomUnailableForTheseDates',
+} */
+
+/* plutôt utiliser ceci
+else if (responseJson.codeError === CodeError.arrivalDateSupDepartureDate) {
+    alert("La date de départ doit être supérieure à la date d'arrivée");
+} */
