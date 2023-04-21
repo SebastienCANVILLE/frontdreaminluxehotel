@@ -35,40 +35,56 @@ export default function Register() {
 
         event.preventDefault()
 
-        // body du register sur la partie html
-        const body: ProfilRegister = {
-            email: emailInput,
-            password: passwordInput,
-            password_confirm: passwordConfirmInput,
-            civility: civility,
-            lastname: lastnameInput,
-            firstname: firstnameInput,
-            adress_line: adressInput,
-            zipCode: zipCodeInput,
-            city: cityInput,
-            country: countryInput,
-            phone_number: phoneInput,
-        }
+        let body: ProfilRegister;
 
-        // Options de requêtes et envoi des données des input en BDD
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body)
-        };
+        // condition qui vérifie que les input ne soit pas undefined en front et return le body si les conditions sont remplies
+        if (emailInput !== "" && passwordInput !== "" && passwordConfirmInput !== "" && civility !== ""
+            && lastnameInput !== "" && firstnameInput !== "" && adressInput !== "" && zipCodeInput !== ""
+            && cityInput !== "" && phoneInput !== "") {
 
-        const response = await fetch('http://localhost:8000/users/register', requestOptions);
-        const responseJson = await response.json();
+            // body du register sur la partie html
+            body = {
+                email: emailInput,
+                password: passwordInput,
+                password_confirm: passwordConfirmInput,
+                civility: civility,
+                lastname: lastnameInput,
+                firstname: firstnameInput,
+                adress_line: adressInput,
+                zipCode: zipCodeInput,
+                city: cityInput,
+                country: countryInput,
+                phone_number: phoneInput,
+            }
 
-        console.log(response, responseJson);
+            // Options de requêtes et envoi des données des input en BDD
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            };
 
-        //si nous avons la réponse json du register dans la console, alors nous faisons un reset des input du formulaire
-        if (responseJson.statusCode === 201) {
-            resetInput()
-            alert("Compte créé avec succès");
-        }
+            const response = await fetch('http://localhost:8000/users/register', requestOptions);
+            const responseJson = await response.json();
 
-        else {
+            console.log(response, responseJson);
+
+            //si nous avons la réponse json du register dans la console, alors nous faisons un reset des input du formulaire
+            if (responseJson.statusCode === 201) {
+                resetInput()
+                alert("Compte créé avec succès");
+            }else if (responseJson.statusCode === 400) {
+                alert("Votre mot de passe ne correspond pas au critère de sécurité");
+            }else if (responseJson.statusCode === 409) {
+                alert("Les mots de passe doivent être identiques");
+            }else if (responseJson.message === "L'Email est déjà utilisé") {
+                alert(responseJson.message);  
+            }else {
+                return
+            }
+
+        } else {
+            alert("Veuillez renseigner tous les champs");
             return
         }
 
@@ -122,13 +138,13 @@ export default function Register() {
                                 {/* <!-- Lastname input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regLastname">Nom</label>
-                                    <input required type="text" className="form-control" id="regLastname" aria-label="choisissez votre nom" value={lastnameInput} onChange={(event) => setLastnameInput(event.target.value)}></input>
+                                    <input type="text" className="form-control" id="regLastname" aria-label="choisissez votre nom" value={lastnameInput} onChange={(event) => setLastnameInput(event.target.value)} required></input>
                                 </div>
 
                                 {/* <!-- Firstname input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regFirstname">Prénom</label>
-                                    <input required type="text" className="form-control" id="regFirstname" aria-label="choisissez votre prénom" value={firstnameInput} onChange={(event) => setFirstnameInput(event.target.value)}></input>
+                                    <input type="text" className="form-control" id="regFirstname" aria-label="choisissez votre prénom" value={firstnameInput} onChange={(event) => setFirstnameInput(event.target.value)} required></input>
                                 </div>
 
                             </div>
@@ -138,19 +154,19 @@ export default function Register() {
                                 {/* <!-- Adress input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regAdress">Adresse</label>
-                                    <input required type="text" className="form-control" id="regAdress" aria-label="choisissez votre adresse" value={adressInput} onChange={(event) => setAdressInput(event.target.value)}></input>
+                                    <input type="text" className="form-control" id="regAdress" aria-label="choisissez votre adresse" value={adressInput} onChange={(event) => setAdressInput(event.target.value)} required></input>
                                 </div>
 
                                 {/* <!-- Zipcode input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regZipcode">Code postal</label>
-                                    <input required type="text" className="form-control" id="regZipcode" aria-label="choisissez votre code postal" value={zipCodeInput} onChange={(event) => setZipCodeInput(event.target.value)}></input>
+                                    <input type="text" className="form-control" id="regZipcode" aria-label="choisissez votre code postal" value={zipCodeInput} onChange={(event) => setZipCodeInput(event.target.value)} required></input>
                                 </div>
 
                                 {/* <!-- City input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regCity">Ville</label>
-                                    <input required type="text" className="form-control" id="regCity" aria-label="choisissez votre ville" value={cityInput} onChange={(event) => setCityInput(event.target.value)}></input>
+                                    <input type="text" className="form-control" id="regCity" aria-label="choisissez votre ville" value={cityInput} onChange={(event) => setCityInput(event.target.value)} required></input>
                                 </div>
 
                             </div>
@@ -160,13 +176,13 @@ export default function Register() {
                                 {/* <!-- Country input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regCountry">Pays</label>
-                                    <input required type="text" className="form-control" id="regCountry" aria-label="choisissez votre pays" value={countryInput} onChange={(event) => setCountryInput(event.target.value)}></input>
+                                    <input type="text" className="form-control" id="regCountry" aria-label="choisissez votre pays" value={countryInput} onChange={(event) => setCountryInput(event.target.value)} required></input>
                                 </div>
 
                                 {/* <!-- Phone input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regPhone">Téléphone</label>
-                                    <input required type="text" className="form-control" id="regCountry" aria-label="choisissez téléphone" value={phoneInput} onChange={(event) => setPhoneInput(event.target.value)}></input>
+                                    <input type="text" className="form-control" id="regCountry" aria-label="choisissez téléphone" value={phoneInput} onChange={(event) => setPhoneInput(event.target.value)} required></input>
                                 </div>
 
                             </div>
@@ -176,19 +192,19 @@ export default function Register() {
                                 {/* <!-- Lastname input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regLastname">Email</label>
-                                    <input required type="email" className="form-control" id="regCountry" aria-label="choisissez email" value={emailInput} onChange={(event) => setEmailInput(event.target.value)}></input>
+                                    <input type="email" className="form-control" id="regCountry" aria-label="choisissez email" value={emailInput} onChange={(event) => setEmailInput(event.target.value)} required></input>
                                 </div>
 
                                 {/* <!-- Password input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regPassword">Mot de passe</label>
-                                    <input required type="password" className="form-control" id="regCountry" aria-label="choisissez mot de passe" value={passwordInput} onChange={(event) => setPasswordInput(event.target.value)}></input>
+                                    <input type="password" className="form-control" id="regCountry" aria-label="choisissez mot de passe" value={passwordInput} onChange={(event) => setPasswordInput(event.target.value)} required></input>
                                 </div>
 
                                 {/* <!-- Password confirm input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regPasswordConfirm">Confirmation mot de passe</label>
-                                    <input required type="password" className="form-control" id="regCountry" aria-label="confirmer votre mot de passe" value={passwordConfirmInput} onChange={(event) => setPasswordConfirmInput(event.target.value)}></input>
+                                    <input type="password" className="form-control" id="regCountry" aria-label="confirmer votre mot de passe" value={passwordConfirmInput} onChange={(event) => setPasswordConfirmInput(event.target.value)} required></input>
                                 </div>
 
                             </div>

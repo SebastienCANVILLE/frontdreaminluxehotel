@@ -23,14 +23,14 @@ export default function Reservation() {
     const { user } = useContext(AuthContext);
 
     const [hotels, setHotels] = useState<Thotel[] | null>(null);
-    const [rooms, setRooms] = useState<Troom[] | null>(null);    
+    const [rooms, setRooms] = useState<Troom[] | null>(null);
 
     const [references, setReferences] = useState("");
     const [hotelInput, setHotelInput] = useState(0); // ce useState sert uniquement à remettre la valeur de l'input hotel à l'initiale après réservation avec la fontion resetInput()
     const [roomIdInput, setRoomIdInput] = useState(0);
     const [arrivalDateInput, setArrivalDateInput] = useState<string>("");
     const [departureDateInput, setDepartureDateInput] = useState<string>("");
-   
+
     useEffect(() => {
         async function getHotels() {
             const requestOptions = {
@@ -91,15 +91,14 @@ export default function Reservation() {
 
         event.preventDefault()
 
-
         let body: ProfilReservation;
 
         // condition qui vérifie que les input ne soit pas undefined en front et return le body si les conditions sont remplies
         if (arrivalDateInput !== "" && departureDateInput !== "" && roomIdInput !== 0) {
-            
+
             if (new Date(arrivalDateInput) < new Date(Date.now())) {
                 alert("La date choisie ne peut pas être antérieure à celle aujourd'hui");
-                return                
+                return
             }
 
             // body du register sur la partie html
@@ -109,7 +108,6 @@ export default function Reservation() {
                 departure_date: departureDateInput,
                 roomId: roomIdInput
             }
-
 
             const requestOptions = {
                 method: 'POST',
@@ -124,30 +122,22 @@ export default function Reservation() {
             const responseJson = await response.json();
             console.log("RESERVATION", responseJson);
 
-
-            if (responseJson.statusCode === 401) {                
-                alert("Veuillez vous connecter avant de valider votre réservation");                
-            }
-
             if (responseJson.statusCode === 201) {
-                resetInput() 
-                alert("Réservation créé avec succès");                
-            }
-            
-            else if (responseJson.message === "La date de départ doit être supérieure à la date d'arrivée") {
+                resetInput()
+                alert("Réservation créé avec succès");
+            } else if (responseJson.statusCode === 401) {
+                alert("Veuillez vous connecter avant de valider votre réservation");
+            } else if (responseJson.message === "La date de départ doit être supérieure à la date d'arrivée") {
                 alert(responseJson.message);
-            }            
-
-            else if (responseJson.message === "La chambre n'est pas disponible pour ces dates") {
+            } else if (responseJson.message === "La chambre n'est pas disponible pour ces dates") {
                 alert(responseJson.message);
-            } 
-            else {
+            } else {
                 return
             }
-            
-        } 
+
+        }
         else {
-            alert("Veuillez renseigner tous les champs"); 
+            alert("Veuillez renseigner tous les champs");
             return
         }
 
@@ -160,8 +150,7 @@ export default function Reservation() {
         setHotelInput(0)
         setRoomIdInput(0)
         setArrivalDateInput("")
-        setDepartureDateInput("") 
-        
+        setDepartureDateInput("")
 
     }
 

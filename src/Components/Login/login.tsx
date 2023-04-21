@@ -12,7 +12,7 @@ export default function Login() {
     const [emailInput, setEmailLogInput] = useState("")
     const [passwordInput, setPasswordLogInput] = useState("")
 
-    const auth = useContext(AuthContext)  
+    const auth = useContext(AuthContext)
 
     async function fetchDataLog() {
 
@@ -29,24 +29,25 @@ export default function Login() {
 
         const response = await fetch('http://localhost:8000/auth/login', requestOptions);
         const responseJson = await response.json();
-        
-        console.log("RESPONSE",response,"RESPONSEJSON",responseJson);
-        
+
+        console.log("RESPONSE", response, "RESPONSEJSON", responseJson);
+
 
         //si la reponse renvoi l' access_token de l'user connecté, alors on envoi la donnée dans le context pour la réutiliser ailleur.
         if (responseJson.access_token) {
-            auth.setUser({...responseJson});
+            auth.setUser({ ...responseJson });
             resetInputLog()
-        }
-
-        else {
+            alert("Connexion réussi");
+        } else if (responseJson.statusCode === 401) {
+            alert("Compte inexistant ou données mal renseignées");
+        } else {
             return
         }
 
     }
 
     //fonction qui reset les inputs
-    async function resetInputLog() { 
+    async function resetInputLog() {
         setEmailLogInput("")
         setPasswordLogInput("")
     }
@@ -68,7 +69,7 @@ export default function Login() {
                             {/* <!-- Email input --> */}
                             <label htmlFor="signUpEmail">Email</label>
                             <div className="form-outline mb-3 mt-1">
-                                <input type="email" id="signUpEmail" className="form-control" aria-label="Saisissez votre email"value={emailInput} onChange={(event) => setEmailLogInput(event.target.value)}></input>
+                                <input type="email" id="signUpEmail" className="form-control" aria-label="Saisissez votre email" value={emailInput} onChange={(event) => setEmailLogInput(event.target.value)}></input>
                             </div>
 
                             {/* <!-- Password input --> */}
