@@ -49,7 +49,7 @@ export default function HotelCard(props: { hotel: Thotel }) {
 
                             {/* récupération des props et du nouveau typage de Troom inclus dans le typage Thotel */}
                             {props.hotel.rooms.map((item) =>
-                                <div className="col-md-4 col-12 mt-3" key={item.id}>
+                                <div className="col-md-6 col-12 mt-3" key={item.id}>
                                     <RoomCard room={item}></RoomCard>
                                 </div>)}
 

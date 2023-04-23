@@ -4,6 +4,7 @@ import { AuthContext } from '../../Context/auth.context';
 import './reservation.css'
 
 
+
 /**
  * @function Reservation
  * 
@@ -15,7 +16,8 @@ type ProfilReservation = {
     reference: string,
     arrival_date: string,
     departure_date: string,
-    roomId: number
+    roomId: number,
+    totalPrice: number
 }
 
 export default function Reservation() {
@@ -30,6 +32,7 @@ export default function Reservation() {
     const [roomIdInput, setRoomIdInput] = useState(0);
     const [arrivalDateInput, setArrivalDateInput] = useState<string>("");
     const [departureDateInput, setDepartureDateInput] = useState<string>("");
+    const [roomPrice, setRoomPrice] = useState<number>(0); //<---------------room price
 
     useEffect(() => {
         async function getHotels() {
@@ -76,6 +79,8 @@ export default function Reservation() {
             if (selectedRoom) {
                 const selectedRooms = selectedRoom.id;
                 setRoomIdInput(selectedRooms);
+                const roomPrice = selectedRoom.price
+                setRoomPrice(roomPrice); //<---------------room price
             }
         }
     }
@@ -92,6 +97,10 @@ export default function Reservation() {
         event.preventDefault()
 
         let body: ProfilReservation;
+        let totalPrice: number; //<---------------room price
+
+        const numberOfNights = Math.ceil((new Date(departureDateInput).getTime() - new Date(arrivalDateInput).getTime()) / (1000 * 3600 * 24)); //<---------------room price
+        totalPrice = numberOfNights * roomPrice ; //<---------------room price
 
         // condition qui vérifie que les input ne soit pas undefined en front et return le body si les conditions sont remplies
         if (arrivalDateInput !== "" && departureDateInput !== "" && roomIdInput !== 0) {
@@ -106,7 +115,8 @@ export default function Reservation() {
                 reference: references,
                 arrival_date: arrivalDateInput,
                 departure_date: departureDateInput,
-                roomId: roomIdInput
+                roomId: roomIdInput,
+                totalPrice: totalPrice //<---------------room price
             }
 
             const requestOptions = {
@@ -151,6 +161,7 @@ export default function Reservation() {
         setRoomIdInput(0)
         setArrivalDateInput("")
         setDepartureDateInput("")
+        setRoomPrice(0)
 
     }
 
@@ -171,7 +182,7 @@ export default function Reservation() {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h1 className="container d-flex justify-content-center modal-title fs-5" id="exampleModalLabel">Réservez votre voyage</h1>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" /* onClick={resetInputLog} */></button>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
                         {/* <!-- Formulaire de réservation --> */}

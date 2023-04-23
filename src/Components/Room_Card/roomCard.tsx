@@ -35,6 +35,7 @@ export default function RoomCard(props: { room: Troom }) {
                 {/* <!-- Title Room Card--> */}
                 <div className="card-body">
                     <h6 className="card-titleRoom text-center">{props.room.name}</h6>
+                    <p className="text-center">{props.room.price}€ / nuits </p>
                 </div>
             </div>
         </div>
