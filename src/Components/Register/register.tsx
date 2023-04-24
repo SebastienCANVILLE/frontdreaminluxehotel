@@ -182,7 +182,7 @@ export default function Register() {
                                 {/* <!-- Phone input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regPhone">Téléphone</label>
-                                    <input type="text" className="form-control" id="regCountry" aria-label="choisissez téléphone" value={phoneInput} onChange={(event) => setPhoneInput(event.target.value)} required></input>
+                                    <input type="text" className="form-control" id="regPhone" aria-label="choisissez téléphone" value={phoneInput} onChange={(event) => setPhoneInput(event.target.value)} required></input>
                                 </div>
 
                             </div>
@@ -191,20 +191,20 @@ export default function Register() {
 
                                 {/* <!-- Lastname input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
-                                    <label htmlFor="regLastname">Email</label>
-                                    <input type="email" className="form-control" id="regCountry" aria-label="choisissez email" value={emailInput} onChange={(event) => setEmailInput(event.target.value)} required></input>
+                                    <label htmlFor="regEmailRegister">Email</label>
+                                    <input type="email" className="form-control" id="regEmailRegister" aria-label="choisissez email" value={emailInput} onChange={(event) => setEmailInput(event.target.value)} required></input>
                                 </div>
 
                                 {/* <!-- Password input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regPassword">Mot de passe</label>
-                                    <input type="password" className="form-control" id="regCountry" aria-label="choisissez mot de passe" value={passwordInput} onChange={(event) => setPasswordInput(event.target.value)} required></input>
+                                    <input type="password" className="form-control" id="regPassword" aria-label="choisissez mot de passe" value={passwordInput} onChange={(event) => setPasswordInput(event.target.value)} required></input>
                                 </div>
 
                                 {/* <!-- Password confirm input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regPasswordConfirm">Confirmation mot de passe</label>
-                                    <input type="password" className="form-control" id="regCountry" aria-label="confirmer votre mot de passe" value={passwordConfirmInput} onChange={(event) => setPasswordConfirmInput(event.target.value)} required></input>
+                                    <input type="password" className="form-control" id="regPasswordConfirm" aria-label="confirmer votre mot de passe" value={passwordConfirmInput} onChange={(event) => setPasswordConfirmInput(event.target.value)} required></input>
                                 </div>
 
                             </div>

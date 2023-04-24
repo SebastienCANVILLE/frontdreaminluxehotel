@@ -1,6 +1,6 @@
 .btn-reservation {
     font-size: 25px;
-    font-weight:600;
+    font-weight: 600;
     color: white;
     background-color: rgba(255, 255, 255, 0);
 }
@@ -8,4 +8,25 @@
 .btn-Res {
     position: fixed;
     margin-top: 200px;
+}
+
+#regDisponibility {
+    padding-top: 10px;
+}
+
+#regPrice {
+    padding-top: 10px;
+}
+
+.labelRegister {
+    font-weight: bold;
+
+}
+
+.text-succes {
+    color: green !important;;
+}
+
+.text-danger {
+    color: red !important;;
 }

@@ -4,7 +4,6 @@ import { AuthContext } from '../../Context/auth.context';
 import './reservation.css'
 
 
-
 /**
  * @function Reservation
  * 
@@ -33,6 +32,9 @@ export default function Reservation() {
     const [arrivalDateInput, setArrivalDateInput] = useState<string>("");
     const [departureDateInput, setDepartureDateInput] = useState<string>("");
     const [roomPrice, setRoomPrice] = useState<number>(0); //<---------------room price
+
+    const [check, setCheck] = useState<string>();
+    const [checkPrice, setCheckPrice] = useState<number>();
 
     useEffect(() => {
         async function getHotels() {
@@ -71,6 +73,7 @@ export default function Reservation() {
      * @function handleSelectRoom
      * 
      * * fonction permettant de trouver l'id de la room selectionnée dans le select rooms.map et ensuite de renvoyer la chambre dans le body
+     * * récupération du prix de la chambre afin de calculer le prix/nuit
     */
     function handleSelectRoom(roomId: number) {
 
@@ -100,7 +103,7 @@ export default function Reservation() {
         let totalPrice: number; //<---------------room price
 
         const numberOfNights = Math.ceil((new Date(departureDateInput).getTime() - new Date(arrivalDateInput).getTime()) / (1000 * 3600 * 24)); //<---------------room price
-        totalPrice = numberOfNights * roomPrice ; //<---------------room price
+        totalPrice = numberOfNights * roomPrice; //<---------------room price
 
         // condition qui vérifie que les input ne soit pas undefined en front et return le body si les conditions sont remplies
         if (arrivalDateInput !== "" && departureDateInput !== "" && roomIdInput !== 0) {
@@ -145,8 +148,7 @@ export default function Reservation() {
                 return
             }
 
-        }
-        else {
+        } else {
             alert("Veuillez renseigner tous les champs");
             return
         }
@@ -164,6 +166,83 @@ export default function Reservation() {
         setRoomPrice(0)
 
     }
+
+    async function checkDisponibility(event: { preventDefault: () => void; }) {
+
+        event.preventDefault()
+
+        let body
+        let totalPrice: number;
+
+        const numberOfNights = Math.ceil((new Date(departureDateInput).getTime() - new Date(arrivalDateInput).getTime()) / (1000 * 3600 * 24)); //<---------------room price
+        totalPrice = numberOfNights * roomPrice;
+
+        // condition qui vérifie que les input ne soit pas undefined en front et return le body si les conditions sont remplies
+        if (arrivalDateInput !== "" && departureDateInput !== "" && roomIdInput !== 0) {
+
+            if (new Date(arrivalDateInput) < new Date(Date.now())) {
+                alert("La date choisie ne peut pas être antérieure à celle aujourd'hui");
+                return
+            }
+
+            // body du register sur la partie html
+            body = {
+                arrival_date: arrivalDateInput,
+                departure_date: departureDateInput,
+                roomId: roomIdInput,
+                totalPrice: totalPrice //<---------------room price
+            }
+
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            }
+
+            const response = await fetch('http://localhost:8000/reservations/check', requestOptions)
+            const responseJson = await response.json();
+            console.log("CHECK", responseJson);
+
+            if (responseJson.statusCode === 201) {
+                setCheck("La chambre est disponible")
+                setCheckPrice(totalPrice)
+                const succes = document.getElementById("regDisponibility");
+                if (succes) {
+                    succes.classList.add("text-succes");
+                }
+            } else if (responseJson.statusCode === 400) {
+                setCheck("Indisponible aux dates demandées")
+                const notSucces = document.getElementById("regDisponibility");
+                if (notSucces) {
+                    notSucces.classList.add("text-danger");
+                }
+            } else {
+                return
+            }
+
+        } else {
+            alert("Veuillez renseigner tous les champs");
+            return
+        }
+
+    };
+
+    /**  
+     * @function formatDate  
+     * Permet récupérer les élements relevants de la date du jour - padStart permet de rajouter un 0 à gauche d'un nombre à un chiffre et ensuite
+     * transforme la date en format string pour une comparaison si nécessaire. Ici la comparaison se fera avec le min des inputs date
+     * pour pouvoir griser les dates antérieures au jour en cours. 
+    */
+    function formatDate(date: any) {
+
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+
+    };
 
     return (
 
@@ -226,19 +305,34 @@ export default function Reservation() {
                                 {/* <!-- Arrived input --> */}
                                 <div className="form-outline col-md-6 col-12 mb-3 mt-1">
                                     <label htmlFor="regArrival">Votre date d'arrivée</label>
-                                    <input id="regArrival" type="date" className="form-control" aria-label="choisissez votre date d'arrivée" value={arrivalDateInput} onChange={(event) => setArrivalDateInput(event.target.value)}></input>
+                                    <input id="regArrival" type="date" className="form-control" aria-label="choisissez votre date d'arrivée" min={formatDate(new Date(Date.now()))}
+                                        value={arrivalDateInput} onChange={(event) => setArrivalDateInput(event.target.value)} ></input> {/*onChange={(event) => {setArrivalDateInput(event.target.value); checkDisponibility(event)}} */}
                                 </div>
 
                                 {/* <!-- Departure input --> */}
                                 <div className="form-outline col-md-6 col-12 mb-3 mt-1">
                                     <label htmlFor="regDeparture">Votre date de départ</label>
-                                    <input id="regDeparture" type="date" className="form-control" aria-label="choisissez votre date de départ" value={departureDateInput} onChange={(event) => setDepartureDateInput(event.target.value)}></input>
+                                    <input id="regDeparture" type="date" className="form-control" aria-label="choisissez votre date de départ" min={formatDate(new Date(arrivalDateInput))}
+                                        value={departureDateInput} onChange={(event) => setDepartureDateInput(event.target.value)} ></input>{/* onChange={(event) => {setDepartureDateInput(event.target.value); checkDisponibility(event)}} */}
+                                </div>
+
+                                {/* <!-- P/disponibility --> */}
+                                <div className=" col-md-6 col-12 mb-3 mt-1 text-center">
+                                    <label className="labelRegister" htmlFor="regDisponibility">Disponibilité </label>
+                                    <p id="regDisponibility" aria-label="disponibilité de la chambre">{check}</p>
+                                </div>
+
+                                {/* <!-- P/totalePrice  --> */}
+                                <div className=" col-md-6 col-12 mb-3 mt-1 text-center">
+                                    <label className="labelRegister" htmlFor="regPrice">Prix du séjour</label>
+                                    <p id="regPrice" aria-label="prix du séjour">{checkPrice} €</p>
                                 </div>
 
                             </div>
 
-                            <div className="modal-footer">{/* {`carousel-item `} */}
-                                <button type="submit" className="btn btn-connect" >Valider</button>
+                            <div className="modal-footer">
+                                <button onClick={checkDisponibility} className="btn btn-primary" >Vérifier</button>
+                                <button type="submit" className="btn btn-connect" >Réserver</button>
                             </div>
 
                         </form>
@@ -253,13 +347,3 @@ export default function Reservation() {
 
 }
 
-
-/* enum CodeError {
-    arrivalDateSupDepartureDate = 'arrivalDateSupDepartureDate',
-    roomUnailableForTheseDates = 'roomUnailableForTheseDates',
-} */
-
-/* plutôt utiliser ceci
-else if (responseJson.codeError === CodeError.arrivalDateSupDepartureDate) {
-    alert("La date de départ doit être supérieure à la date d'arrivée");
-} */
