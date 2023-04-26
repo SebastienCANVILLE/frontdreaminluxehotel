@@ -9,7 +9,7 @@ import { createContext } from "react";
  * Pour la création de ce context, nous typons notre user, créons une interface afin de déterminer ce que nous voulons recevoir, 
  * ici soit l'user, soit une valeur null et nous créons une constante Auth qui renvoi par défaut une valeur null.
  */
-export type Thotel = {
+export type THotel = {
 
     id: number,
     photo: string,
@@ -19,11 +19,11 @@ export type Thotel = {
     phone_number: string,
     city: string,
     comments: { id: number, commentary: string }[],
-    rooms: Troom [],
-    reservations: { id: number, reference: string, arrival_date: string, departure_date: string }[]
+    rooms: TRoom [],
+    reservations: { id: number, reference: string, arrival_date: string, departure_date: string, totalPrice: number}[]
 }
 
-export type Troom = {
+export type TRoom = {
 
     id: number,
     photo: string,
@@ -34,8 +34,8 @@ export type Troom = {
 }
 
 export interface IHotelContext {
-    hotel: Thotel | null;
-    setHotel: (hotel: Thotel | null) => void;
+    hotel: THotel | null;
+    setHotel: (hotel: THotel | null) => void;
 }
 
 export const HotelContext = createContext<IHotelContext>({

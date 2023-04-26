@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Troom } from '../../Context/hotel.context';
+import { TRoom } from '../../Context/hotel.context';
 import './roomCard.css';
 
 /** 
@@ -9,7 +9,7 @@ import './roomCard.css';
  * * Component parent hotelCard
  * * Fonction Zoom implémenté pour chaque image de la chambre
 */
-export default function RoomCard(props: { room: Troom }) {
+export default function RoomCard(props: { room: TRoom }) {
 
     const [zoomed, setZoomed] = useState(false);
 

@@ -7,7 +7,7 @@
 
 .btn-Res {
     position: fixed;
-    margin-top: 200px;
+    margin-top: 190px;
 }
 
 #regDisponibility {
@@ -23,7 +23,7 @@
 
 }
 
-.text-succes {
+.text-success {
     color: green !important;;
 }
 

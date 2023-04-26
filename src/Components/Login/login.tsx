@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../../Context/auth.context';
 import './login.css'
 
-type ProfilLog = {
+type TProfilLog = {
     email: string;
     password: string;
 }
@@ -16,7 +16,7 @@ export default function Login() {
 
     async function fetchDataLog() {
 
-        const body: ProfilLog = {
+        const body: TProfilLog = {
             email: emailInput,
             password: passwordInput,
         }

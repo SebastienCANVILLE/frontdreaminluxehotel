@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Thotel } from '../../Context/hotel.context';
+import { THotel } from '../../Context/hotel.context';
 import HotelCard from '../Hotel_Card/hotelCard';
 import './destination.css'
 
@@ -13,7 +13,7 @@ import './destination.css'
  */
 export default function Destination() {
 
-    const [hotels, setHotels] = useState<Thotel[] | null>(null);
+    const [hotels, setHotels] = useState<THotel[] | null>(null);
 
     useEffect(() => {
         async function getHotels() {

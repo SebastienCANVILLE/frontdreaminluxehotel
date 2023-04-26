@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Thotel } from '../../Context/hotel.context';
+import { THotel } from '../../Context/hotel.context';
 import RoomCard from '../Room_Card/roomCard';
 import './hotelCard.css'
 
@@ -10,7 +10,7 @@ import './hotelCard.css'
  * * Récupère les card des chambres de l'hôtel via le composant enfant roomCard
  * * Elle s'occupe également d'afficher le détail de l'hôtel
 */
-export default function HotelCard(props: { hotel: Thotel }) {
+export default function HotelCard(props: { hotel: THotel }) {
 
     // const permettant d'ouvrir et fermer la partie détails de HotelCArd
     const [showDetails, setShowDetails] = useState(false);

@@ -1,4 +1,6 @@
 .btn-destination {
+    position: relative;
+    top: 20%;
     font-size: 30px;
     font-weight:600;
     color: white;

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import './App.css';
 import HomePage from './Pages/homePage';
 import { AuthContext, Tuser } from './Context/auth.context';
-import { HotelContext, Thotel } from './Context/hotel.context';
+import { HotelContext, THotel } from './Context/hotel.context';
+import './App.css';
 
 export default function App() {
 
   const [user, setUser] = useState<Tuser | null>(null);
-  const [hotel, setHotel] = useState<Thotel | null>(null);
+  const [hotel, setHotel] = useState<THotel | null>(null);
 
   return (
 

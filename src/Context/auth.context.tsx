@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { Thotel, Troom } from "./hotel.context";
+import { THotel, TRoom } from "./hotel.context";
 
 /**
  * création d'un context (super PROPS) autour de l'user permettant d'aller chercher la donnée de l'utilisateur,
@@ -25,7 +25,7 @@ export type Tuser = {
         phone_number: string,
         role: string,
         comments: { id: number, commentary: string }[],
-        reservations: { id: number, reference: string, arrival_date: Date, departure_date: Date }[]
+        reservations: { id: number, reference: string, arrival_date: string, departure_date: string, totalPrice: number }[]
     },
     access_token: string
 }

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Thotel, Troom } from '../../Context/hotel.context';
+import { THotel, TRoom } from '../../Context/hotel.context';
 import { AuthContext } from '../../Context/auth.context';
 import './reservation.css'
 
@@ -11,7 +11,7 @@ import './reservation.css'
  * * Système d'affichage par caroussel Bootstrp 5
  * * 
 */
-type ProfilReservation = {
+type TProfilReservation = {
     reference: string,
     arrival_date: string,
     departure_date: string,
@@ -23,8 +23,8 @@ export default function Reservation() {
 
     const { user } = useContext(AuthContext);
 
-    const [hotels, setHotels] = useState<Thotel[] | null>(null);
-    const [rooms, setRooms] = useState<Troom[] | null>(null);
+    const [hotels, setHotels] = useState<THotel[] | null>(null);
+    const [rooms, setRooms] = useState<TRoom[] | null>(null);
 
     const [references, setReferences] = useState("");
     const [hotelInput, setHotelInput] = useState(0); // ce useState sert uniquement à remettre la valeur de l'input hotel à l'initiale après réservation avec la fontion resetInput()
@@ -99,7 +99,7 @@ export default function Reservation() {
 
         event.preventDefault()
 
-        let body: ProfilReservation;
+        let body: TProfilReservation;
         let totalPrice: number; //<---------------room price
 
         const numberOfNights = Math.ceil((new Date(departureDateInput).getTime() - new Date(arrivalDateInput).getTime()) / (1000 * 3600 * 24)); //<---------------room price
@@ -208,16 +208,16 @@ export default function Reservation() {
             if (responseJson.statusCode === 201) {
                 setCheck("La chambre est disponible")
                 setCheckPrice(totalPrice)
-                const succes = document.getElementById("regDisponibility");
+                /* const succes = document.getElementById("regDisponibility");
                 if (succes) {
                     succes.classList.add("text-succes");
-                }
+                } */
             } else if (responseJson.statusCode === 400) {
                 setCheck("Indisponible aux dates demandées")
-                const notSucces = document.getElementById("regDisponibility");
+                /* const notSucces = document.getElementById("regDisponibility");
                 if (notSucces) {
                     notSucces.classList.add("text-danger");
-                }
+                } */
             } else {
                 return
             }
@@ -243,6 +243,8 @@ export default function Reservation() {
         return `${year}-${month}-${day}`;
 
     };
+
+    const colorText = check === "La chambre est disponible" ? 'text-success' : 'text-danger';
 
     return (
 
@@ -319,7 +321,7 @@ export default function Reservation() {
                                 {/* <!-- P/disponibility --> */}
                                 <div className=" col-md-6 col-12 mb-3 mt-1 text-center">
                                     <label className="labelRegister" htmlFor="regDisponibility">Disponibilité </label>
-                                    <p id="regDisponibility" aria-label="disponibilité de la chambre">{check}</p>
+                                    <p className={colorText} id="regDisponibility" aria-label="disponibilité de la chambre">{check}</p>
                                 </div>
 
                                 {/* <!-- P/totalePrice  --> */}
