@@ -15,9 +15,9 @@ export default function ConsultReservations(props: TProps) {
 
         <>
 
-            <div className="container-fluid contRes text-center pt-3 pb-5 mb-5" id="reservations">
+            <div className="container-fluid contRes text-center pt-3 pb-5 mb-5" >
 
-                <h4 className="resConsTitle">Mes réservations</h4>
+                <h4 id="reservations" className="resConsTitle">Mes réservations</h4>
 
                 <div className="table pt-3">
 

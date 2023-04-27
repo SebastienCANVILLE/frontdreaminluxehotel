@@ -20,6 +20,8 @@
     background-color: black !important;
 }
 
-.modal-title{
-    font-size: 80px;  
+.destination-title{
+    color: #BC9E56;
+    background-color: black;
+    font-size: 30px;  
 }

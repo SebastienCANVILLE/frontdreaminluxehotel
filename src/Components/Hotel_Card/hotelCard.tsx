@@ -25,53 +25,63 @@ export default function HotelCard(props: { hotel: THotel }) {
 
     return (
 
-        <div className="row-fluid d-flex justify-content-center">
-            <div className="col-md-8 col-12">
+        <div className="row d-flex justify-content-center">
+            <div className="col-md-6 col-12 pe-0 ps-0">
 
-                {/* Btn Card Hotel*/}
-                <a href="#" className="btn mt-3 mb-3" onClick={OpenDetails}>
-
-                    <div className="card" onClick={CloseDetails}>
-                        <img src="/photos/LogoHotel.jpg" className="card-img-top" alt="..."></img>
-                        <div className="card-body">
-                            <h5 className="card-titleHotel text-center">{props.hotel.name_hotel}</h5>
-                        </div>
+                <div className="card">
+                    <img src="/photos/LogoHotel.jpg" className="card-img-top" alt="..."></img>
+                    <div className="card-body">
+                        <h5 className="card-titleHotel text-center">{props.hotel.name_hotel}</h5>
                     </div>
+                </div>
 
-                </a>
+                {/* <!-- Buttom Caroussel --> */}
+                <div className="btn-carrou pt-5 d-flex justify-content-center">
 
-                {/* Open Details */}
-                {showDetails &&
-                    <div className="card-details">
-                        <div className="row">
+                    {/* <!-- Buttom prev --> */}
+                    <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span className="visually-hidden">Previous</span>
+                    </button>
 
-                            <h2 className='titleRoom d-flex justify-content-center text-center mt-4'>Nos chambres</h2>
+                    {/* <!-- Buttom next --> */}
+                    <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span className="visually-hidden">Next</span>
 
-                            {/* récupération des props et du nouveau typage de Troom inclus dans le typage Thotel */}
-                            {props.hotel.rooms.map((item) =>
-                                <div className="col-md-6 col-12 mt-3" key={item.id}>
-                                    <RoomCard room={item}></RoomCard>
-                                </div>)}
+                    </button>
+                </div>
+                {/*Details */}
+                <div className="card-details">
+                    <div className="row">
 
-                            {/* Title Contact */}
-                            <h5 className='d-flex justify-content-center text-center mt-4'>Contactez-nous :</h5>
+                        <h2 className='titleRoom d-flex justify-content-center text-center mt-5'>
+                            --- Nos chambres ---</h2>
 
-                            {/* <P> Contact */}
-                            <div className="col-12 d-flex justify-content-center text-center">
-                                <p>{props.hotel.adress_line} <br />
-                                    {props.hotel.zipCode} {props.hotel.city} <br />
-                                    {props.hotel.phone_number}
-                                </p>
-                            </div>
+                        {/* récupération des props et du nouveau typage de Troom inclus dans le typage Thotel */}
+                        {props.hotel.rooms.map((item) =>
+                            <div className="col-md-4 col-12 mt-5 mb-3" key={item.id}>
+                                <RoomCard room={item}></RoomCard>
+                            </div>)}
 
-                            {/* Btn Close */}
-                            <div className="col-12 d-flex justify-content-center mt-2 mb-2">
-                                <button className="btn btn-primary" onClick={CloseDetails}>Fermer le détail</button>
-                            </div>
+                        {/* Title Contact */}
+                        <h5 className='d-flex justify-content-center text-center mt-4'>Contactez-nous :</h5>
 
+                        {/* <P> Contact */}
+                        <div className="col-12 d-flex justify-content-center text-center">
+                            <p>{props.hotel.adress_line} <br />
+                                {props.hotel.zipCode} {props.hotel.city} <br />
+                                {props.hotel.phone_number}
+                            </p>
                         </div>
+
+                        {/* Btn Close */}
+                        <div className="col-12 d-flex justify-content-center mt-2 mb-2">
+                            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalreservation">Réserver</button>
+                        </div>
+
                     </div>
-                }
+                </div>
 
             </div>
         </div>

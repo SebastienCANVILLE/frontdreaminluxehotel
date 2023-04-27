@@ -2,8 +2,18 @@
     color: #BC9E56;
     font-size: 30px;
     
+    
 }
 
 .titleRoom{
     color: #BC9E56; 
+    background-color: black;
+}
+
+.carousel-control-next{
+    position:inherit;
+}
+
+.carousel-control-prev{
+    position:inherit;
 }

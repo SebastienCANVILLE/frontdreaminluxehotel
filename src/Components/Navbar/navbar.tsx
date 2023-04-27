@@ -12,7 +12,11 @@ export default function Navbar(props: TProps) {
     const { user } = useContext(AuthContext);
 
     const logOut = () => { setUser(null) }; // const de déconnexion
-    const showReservation = () => { props.setPage(true) } // affiche les réservations
+    const showReservation = () => { 
+        props.setPage(true) 
+        //setInterval(() => window.location.hash = '#reservations', 200)
+        ;
+    } // affiche les réservations
 
     function CloseNav() {
         const [expanded, setExpanded] = useState(false);
