@@ -13,15 +13,15 @@ import './hotelCard.css'
 export default function HotelCard(props: { hotel: THotel }) {
 
     // const permettant d'ouvrir et fermer la partie détails de HotelCArd
-    const [showDetails, setShowDetails] = useState(false);
-
-    const OpenDetails = () => {//permet d'ouvrir et de fermer directement depuis le btn a href
-        setShowDetails(!showDetails);
-    }
-
-    const CloseDetails = () => {
-        setShowDetails(false);
-    }
+    /*     const [showDetails, setShowDetails] = useState(false);
+    
+        const OpenDetails = () => {//permet d'ouvrir et de fermer directement depuis le btn a href
+            setShowDetails(!showDetails);
+        }
+    
+        const CloseDetails = () => {
+            setShowDetails(false);
+        } */
 
     return (
 
@@ -36,7 +36,7 @@ export default function HotelCard(props: { hotel: THotel }) {
                 </div>
 
                 {/* <!-- Buttom Caroussel --> */}
-                <div className="btn-carrou pt-5 d-flex justify-content-center">
+                <div className="btn-carrou pt-3 d-flex justify-content-center">
 
                     {/* <!-- Buttom prev --> */}
                     <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -48,9 +48,15 @@ export default function HotelCard(props: { hotel: THotel }) {
                     <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
                         <span className="carousel-control-next-icon" aria-hidden="true"></span>
                         <span className="visually-hidden">Next</span>
-
                     </button>
+
                 </div>
+
+                {/* Btn Reservation 1 */}
+                <div className="col-12 d-flex justify-content-center mt-2 mb-2 pt-3">
+                    <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalreservation">Réserver</button>
+                </div>
+
                 {/*Details */}
                 <div className="card-details">
                     <div className="row">
@@ -75,7 +81,7 @@ export default function HotelCard(props: { hotel: THotel }) {
                             </p>
                         </div>
 
-                        {/* Btn Close */}
+                        {/* Btn Reservation 2 */}
                         <div className="col-12 d-flex justify-content-center mt-2 mb-2">
                             <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalreservation">Réserver</button>
                         </div>

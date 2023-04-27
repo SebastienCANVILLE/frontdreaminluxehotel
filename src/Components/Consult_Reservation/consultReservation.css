@@ -1,8 +1,12 @@
-.contRes {
+.contRes {    
     background-color: white;
+    margin-top: 80px;   
 }
 
 .resConsTitle {
     color: #BC9E56;
-    font-size: 25px;
+    font-size: 25px; 
 }
+
+
+

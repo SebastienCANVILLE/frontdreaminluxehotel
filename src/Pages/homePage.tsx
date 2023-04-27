@@ -8,27 +8,29 @@ import ConsultReservations from '../Components/Consult_Reservation/consultReserv
 import './homePage.css'
 import { useContext, useState } from 'react';
 import { AuthContext } from '../Context/auth.context';
+import Profil from '../Components/Profil/profil';
 
 export default function HomePage() {
 
     const { user } = useContext(AuthContext);
 
     const [page, setPage] =useState(false);
+    const [profil, setProfil] =useState(false);
 
 
     return (
         <div className="container-fluid px-0">
 
-            <div>
+            <div>               
 
-                <img src="/photos/HomePageBg.jpeg" className="fluid" />
-
-                <Navbar setPage={setPage}></Navbar>
+                <Navbar setPage={setPage} setProfil={setProfil}></Navbar>
                 <Register></Register>
                 <Login></Login>
+                {profil === true && user?.access_token && <Profil setProfil={setProfil}></Profil>}
+                {page === true && user?.access_token && <ConsultReservations setPage={setPage}></ConsultReservations>}
+                <img src="/photos/HomePageBg.jpeg" className="fluid" />
                 <Destination></Destination>
                 <Reservation></Reservation>
-                {page === true && user?.access_token && <ConsultReservations setPage={setPage}></ConsultReservations>}
                 <Footer></Footer>
 
             </div>

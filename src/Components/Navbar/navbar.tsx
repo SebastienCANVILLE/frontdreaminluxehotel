@@ -1,29 +1,26 @@
 import { useContext, useState } from 'react';
-import './navbar.css'
 import { AuthContext } from '../../Context/auth.context';
+import './navbar.css'
 
 type TProps = {
-    setPage: Function
+    setPage: Function,
+    setProfil: Function
 }
+
 
 export default function Navbar(props: TProps) {
 
     const { setUser } = useContext(AuthContext);
     const { user } = useContext(AuthContext);
 
-    const logOut = () => { setUser(null) }; // const de déconnexion
-    const showReservation = () => { 
-        props.setPage(true) 
-        //setInterval(() => window.location.hash = '#reservations', 200)
-        ;
-    } // affiche les réservations
+    const logOut = () => { setUser(null) };     // const de déconnexion
 
-    function CloseNav() {
-        const [expanded, setExpanded] = useState(false);
+    const showReservation = () => {             // affiche les réservations
+        props.setPage(true);            
+    }
 
-        const closeNavbar = () => {
-            setExpanded(false);
-        };
+    const showProfil = () => {                  // affiche le profil
+        props.setProfil(true);            
     }
 
 
@@ -69,12 +66,12 @@ export default function Navbar(props: TProps) {
 
                             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
 
-                                {/* <!-- Button My Destinations --> */}
+                                {/* <!-- Button My Destinations --> */} {/*-------------------------- A VOIR ----------------------
                                 <li className="nav-item">
                                     <button type="button" className="btn btn-link text-black" data-bs-toggle="modal" data-bs-target="#modaldestination">
                                         Nos destinations
                                     </button>
-                                </li>
+                                </li>*/}
 
                                 {/* <!-- Buttom Reservation --> */}
                                 <li className="nav-item">
@@ -100,15 +97,15 @@ export default function Navbar(props: TProps) {
                                 {/* <!-- Button Profil --> */}
                                 {user?.access_token &&
                                     <li className="nav-item">
-                                        <button type="button" className="btn btn-link text-black mt-3">Profil</button>
+                                        <a type="button" className="btn btn-link text-black mt-3" href="#profil"
+                                            onClick={showProfil} data-bs-dismiss="offcanvas">Mon profil</a>
                                     </li>}
 
                                 {/* <!-- Button My reservation --> */}
                                 {user?.access_token &&
                                     <li className="nav-item">
-                                        <a type="button" className="btn btn-link text-black" href="#reservations" onClick={showReservation} data-bs-dismiss="offcanvas">
-                                            Mes réservations
-                                        </a>
+                                        <a type="button" className="btn btn-link text-black" href="#reservations"
+                                            onClick={showReservation} data-bs-dismiss="offcanvas">Mes réservations</a>
                                     </li>}
 
                                 {/* <!-- Button Contact --> */}

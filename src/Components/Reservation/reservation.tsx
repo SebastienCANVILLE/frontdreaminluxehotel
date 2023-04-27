@@ -36,6 +36,8 @@ export default function Reservation() {
     const [check, setCheck] = useState<string>();
     const [checkPrice, setCheckPrice] = useState<number>();
 
+    const [reservations, setReservations] = useState([]);
+
     useEffect(() => {
         async function getHotels() {
             const requestOptions = {
