@@ -40,7 +40,7 @@ export default function Register() {
         // condition qui vérifie que les input ne soit pas undefined en front et return le body si les conditions sont remplies
         if (emailInput !== "" && passwordInput !== "" && passwordConfirmInput !== "" && civility !== ""
             && lastnameInput !== "" && firstnameInput !== "" && adressInput !== "" && zipCodeInput !== ""
-            && cityInput !== "" && phoneInput !== "") {
+            && cityInput !== "" && countryInput !== "" && phoneInput !== "") {
 
             // body du register sur la partie html
             body = {

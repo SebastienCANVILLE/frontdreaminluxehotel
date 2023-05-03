@@ -26,7 +26,7 @@ export default function RoomCard(props: { room: TRoom }) {
             {/* <!-- Img Room Card --> */}
             <div className="card">
                 <img
-                    src="/photos/LogoHotel.jpg"
+                    src="/photos/LogoHotel.jpg" /* src={/photos/${props.item.continent}.jpg} */
                     className={`card-img-top zoomable ${zoomed ? 'zoomed' : ''}`} // ajouter la classe "zoomed" si "zoomed" est vrai
                     alt="..."
                     style={{ width: zoom }} // changer la taille de l'image en fonction de la constante

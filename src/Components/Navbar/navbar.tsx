@@ -10,8 +10,7 @@ type TProps = {
 
 export default function Navbar(props: TProps) {
 
-    const { setUser } = useContext(AuthContext);
-    const { user } = useContext(AuthContext);
+    const { user, setUser } = useContext(AuthContext);
 
     const logOut = () => { setUser(null) };     // const de déconnexion
 

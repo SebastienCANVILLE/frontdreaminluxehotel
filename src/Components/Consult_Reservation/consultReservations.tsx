@@ -6,7 +6,7 @@ import './consultReservation.css'
 type TProps = {
     setPage: Function
 }
-export default function ConsultReservations(props: TProps) {
+export default function ConsultReservations(props: TProps) { // props pour l'utilisation de la fermeture du ConsultReservations via le bouton
 
     const { user, setUser } = useContext(AuthContext);
 
@@ -15,7 +15,6 @@ export default function ConsultReservations(props: TProps) {
     function deleteReservation(id: number) {
         const reservation = user!.user.reservations.filter(item => item.id !== id);
         user!.user.reservations = reservation;
-
         setUser({ ...user!});
     }
 

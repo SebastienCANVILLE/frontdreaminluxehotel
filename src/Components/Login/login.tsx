@@ -38,7 +38,8 @@ export default function Login() {
             auth.setUser({ ...responseJson });
             resetInputLog()
             alert("Connexion réussi");
-        } else if (responseJson.statusCode === 401) {
+
+        } else if (responseJson.statusCode === 406) {
             alert("Compte inexistant ou données mal renseignées");
         } else {
             return

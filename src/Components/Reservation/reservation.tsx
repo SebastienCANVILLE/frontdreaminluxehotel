@@ -21,7 +21,7 @@ type TProfilReservation = {
 
 export default function Reservation() {
 
-    const { user } = useContext(AuthContext);
+    const { user, setUser } = useContext(AuthContext);
 
     const [hotels, setHotels] = useState<THotel[] | null>(null);
     const [rooms, setRooms] = useState<TRoom[] | null>(null);
@@ -35,8 +35,6 @@ export default function Reservation() {
 
     const [check, setCheck] = useState<string>();
     const [checkPrice, setCheckPrice] = useState<number>();
-
-    const [reservations, setReservations] = useState([]);
 
     useEffect(() => {
         async function getHotels() {
@@ -136,8 +134,10 @@ export default function Reservation() {
             const response = await fetch('http://localhost:8000/reservations', requestOptions)
             const responseJson = await response.json();
             console.log("RESERVATION", responseJson);
-
+            
             if (responseJson.statusCode === 201) {
+                user!.user.reservations = [...user!.user.reservations, responseJson.data]
+                setUser({...user!});
                 resetInput()
                 alert("Réservation créé avec succès");
             } else if (responseJson.statusCode === 401) {
@@ -210,16 +210,8 @@ export default function Reservation() {
             if (responseJson.statusCode === 201) {
                 setCheck("La chambre est disponible")
                 setCheckPrice(totalPrice)
-                /* const succes = document.getElementById("regDisponibility");
-                if (succes) {
-                    succes.classList.add("text-succes");
-                } */
             } else if (responseJson.statusCode === 400) {
                 setCheck("Indisponible aux dates demandées")
-                /* const notSucces = document.getElementById("regDisponibility");
-                if (notSucces) {
-                    notSucces.classList.add("text-danger");
-                } */
             } else {
                 return
             }

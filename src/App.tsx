@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HomePage from './Pages/homePage';
 import { AuthContext, Tuser } from './Context/auth.context';
 import { HotelContext, THotel } from './Context/hotel.context';
