@@ -1,14 +1,14 @@
-import Destination from '../Components/Modal_Destination/destination';
+import Destination from '../Components/Destination/destination';
 import Footer from '../Components/Footer/footer';
 import Login from '../Components/Login/login';
 import Navbar from '../Components/Navbar/navbar';
 import Register from '../Components/Register/register';
 import Reservation from '../Components/Reservation/reservation';
 import ConsultReservations from '../Components/Consult_Reservation/consultReservations';
-import './homePage.css'
 import { useContext, useState } from 'react';
 import { AuthContext } from '../Context/auth.context';
 import Profil from '../Components/Profil/profil';
+import './homePage.css'
 
 export default function HomePage() {
 

@@ -41,6 +41,8 @@ export default function Login() {
 
         } else if (responseJson.statusCode === 406) {
             alert("Compte inexistant ou données mal renseignées");
+        } else if (responseJson.statusCode === 401) {
+            alert("Compte inexistant ou données mal renseignées");
         } else {
             return
         }

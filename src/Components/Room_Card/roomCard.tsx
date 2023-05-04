@@ -25,16 +25,19 @@ export default function RoomCard(props: { room: TRoom }) {
 
             {/* <!-- Img Room Card --> */}
             <div className="card">
-                <img
-                    src="/photos/LogoHotel.jpg" /* src={/photos/${props.item.continent}.jpg} */
-                    className={`card-img-top zoomable ${zoomed ? 'zoomed' : ''}`} // ajouter la classe "zoomed" si "zoomed" est vrai
-                    alt="..."
-                    style={{ width: zoom }} // changer la taille de l'image en fonction de la constante
-                    onClick={handleClick} />
+                <div className="image-container">
+                    <img
+                    /*src="/photos/LogoHotel.jpg"*/ src={`/photos/${props.room.name}.jpeg`}
+                        className={`card-img-top zoomable ${zoomed ? 'zoomed' : ''}`} // ajouter la classe "zoomed" si "zoomed" est vrai
+                        id="image-room"
+                        alt="..."
+                        style={{ width: zoom }} // changer la taille de l'image en fonction de la constante
+                        onClick={handleClick} />
+                </div>
 
                 {/* <!-- Title Room Card--> */}
                 <div className="card-body">
-                    <h6 className="card-titleRoom text-center">{props.room.name}</h6>
+                    <h6 className="card-titleRoom text-center">{props.room?.name}</h6>
                     <p className="text-center">{props.room.price}€ / nuits </p>
                 </div>
             </div>
@@ -42,33 +45,3 @@ export default function RoomCard(props: { room: TRoom }) {
     );
 }
 
-
-
-
-
-
-
-/* import { Troom } from '../../Context/hotel.context'
-import './roomCard.css'
-
-export default function RoomCard(props:{room :Troom}) {
-    return (
-
-        <div className="row-fluid">
-            
-                
-                    <div className="card">
-
-                        <img src="/photos/LogoHotel.jpg" className="card-img-top zoomable" alt="..."></img>
-                        <div className="card-body">
-                            <h6 className="card-titleRoom text-center">{props.room.name}</h6>
-                        </div>                        
-                        
-                    </div>                
-
-            
-        </div>
-
-
-    )
-} */
