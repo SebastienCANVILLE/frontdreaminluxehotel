@@ -70,8 +70,7 @@ export default function Comment() {
             if (responseJson.statusCode === 201) {
                 resetInput()
                 alert("Commentaire créé avec succès");
-            } /* else if (responseJson.statusCode === 400) { <-------------------------------------------------------------A VOIR
-            } */ else {
+            } else {
                 return
             }
 
@@ -123,7 +122,7 @@ export default function Comment() {
                                 {/* <!-- clientName input --> */}
                                 <div className="mt-2 mb-3">
                                     <label htmlFor="clientName">Saisissez votre commentaire</label>
-                                    <input type= "text" className="form-control" id="clientName" aria-label="Saisissez votre nom"
+                                    <input type="text" className="form-control" id="clientName" aria-label="Saisissez votre nom"
                                         required value={clientNameInput} onChange={(event) => setClientNameInput(event.target.value)} ></input>
 
                                 </div>

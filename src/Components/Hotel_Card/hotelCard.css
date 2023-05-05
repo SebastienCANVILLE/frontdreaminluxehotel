@@ -6,6 +6,7 @@
 .titleRoom{
     color: #BC9E56; 
     background-color: black;
+    padding-bottom: 8px; 
 }
 
 .carousel-control-next{

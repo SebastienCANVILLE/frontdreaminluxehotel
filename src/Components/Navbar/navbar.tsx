@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { AuthContext } from '../../Context/auth.context';
 import './navbar.css'
 
@@ -12,13 +12,16 @@ export default function Navbar(props: TProps) {
 
     const { user, setUser } = useContext(AuthContext);
 
-    const logOut = () => { setUser(null) };     // const de déconnexion
+    // const de déconnexion
+    const logOut = () => { setUser(null) };
 
-    const showReservation = () => {             // affiche les réservations
+    // affiche le composant des réservations
+    const showReservation = () => {
         props.setPage(true);
     }
 
-    const showProfil = () => {                  // affiche le profil
+    // affiche le composant profil
+    const showProfil = () => {
         props.setProfil(true);
     }
 

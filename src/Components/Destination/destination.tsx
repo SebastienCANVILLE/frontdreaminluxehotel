@@ -46,7 +46,7 @@ export default function Destination() {
                         {/* <!-- Hotel CArd --> */}
                         {hotels?.map((item, index) =>
                             <div className={`carousel-item ${index === 0 ? "active" : ""}`} key={item.id}>
-                                <HotelCard hotel={item}></HotelCard>
+                                <HotelCard hotels={item}></HotelCard>
                             </div>
                         )}
 

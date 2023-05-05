@@ -1,6 +1,10 @@
-import { THotel } from '../../Context/hotel.context';
+import { useContext } from 'react';
+import { HotelContext, THotel } from '../../Context/hotel.context';
 import RoomCard from '../Room_Card/roomCard';
+import { CommentView } from '../Comment/viewcomments';
+import { AuthContext } from '../../Context/auth.context';
 import './hotelCard.css'
+
 
 /** 
  * @function HotelCard
@@ -9,9 +13,19 @@ import './hotelCard.css'
  * * Récupère les card des chambres de l'hôtel via le composant enfant roomCard
  * * Elle s'occupe également d'afficher le détail de l'hôtel
 */
-export default function HotelCard(props: { hotel: THotel }) {
+export default function HotelCard(props: { hotels: THotel }) {
 
+const {hotel, setHotel} = useContext(HotelContext)
+const {user, setUser} = useContext(AuthContext)
 
+function deleteComment(id: number) {
+const comment = user!.user.comments.filter(item => item.id !== id);
+    user!.user.comments = comment;
+    setUser({ ...user!});
+    /* const commentAdmin = hotel!.comments.filter(item => item.id !== id);
+    hotel!.comments = commentAdmin;
+    setHotel({ ...hotel!}); */
+}
 
     return (
 
@@ -21,7 +35,7 @@ export default function HotelCard(props: { hotel: THotel }) {
                 <div className="card">
                     <img src="/photos/LogoHotel.jpg" className="card-img-top" alt="..."></img>
                     <div className="card-body">
-                        <h5 className="card-titleHotel text-center">{props.hotel.name_hotel}</h5>
+                        <h5 className="card-titleHotel text-center">{props.hotels.name_hotel}</h5>
                     </div>
                 </div>
 
@@ -53,11 +67,11 @@ export default function HotelCard(props: { hotel: THotel }) {
             <div className="card-details">
                 <div className="row">
 
-                    <h2 className='titleRoom d-flex justify-content-center text-center mt-5'>Les chambres</h2>
+                    <h2 className='titleRoom d-flex justify-content-center text-center mt-3'>Les chambres</h2>
 
                     {/* récupération des props et du nouveau typage de Troom inclus dans le typage Thotel */}
-                    {props.hotel.rooms.map((item) =>
-                        <div className="col-md-4 col-12 mt-5 mb-3" key={item.id}>
+                    {props.hotels.rooms.map((item) =>
+                        <div className="col-md-4 col-12 mt-3 mb-3" key={item.id}>
                             <RoomCard room={item}></RoomCard>
                         </div>)}
 
@@ -66,9 +80,9 @@ export default function HotelCard(props: { hotel: THotel }) {
 
                     {/* <P> Contact */}
                     <div className="col-12 d-flex justify-content-center text-center">
-                        <p>{props.hotel.adress_line} <br />
-                            {props.hotel.zipCode} {props.hotel.city} <br />
-                            {props.hotel.phone_number}
+                        <p>{props.hotels.adress_line} <br />
+                            {props.hotels.zipCode} {props.hotels.city} <br />
+                            {props.hotels.phone_number}
                         </p>
                     </div>
 
@@ -76,6 +90,23 @@ export default function HotelCard(props: { hotel: THotel }) {
                     <div className="col-12 d-flex justify-content-center mt-2 mb-2">
                         <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalreservation">Réserver</button>
                     </div>
+
+                    {/* Comments 
+                    <h5 className='contact d-flex justify-content-center text-center mt-4'>Commentaires :</h5>
+                    {hotel?.comments?.map((item) =>
+                    <div className="col-12 d-flex justify-content-center text-center" key={item.id}>
+                        <p >{item.clientName}<br/>
+                        {item.commentary}</p> 
+                        
+                    </div>)}*/}
+
+                    {/* Comments */}
+                    <h1 className="destination-title text-center mt-3 mb-3 px-0" id="staticBackdropLabel">Ils nous ont laissé un commentaire sur leur séjour</h1>
+                    {props.hotels.comments.map((item) =>
+                    <div className="col-12 d-flex justify-content-center text-center" key={item.id}>
+                        <CommentView del={deleteComment} comments={item}></CommentView> 
+                        
+                    </div>)}
 
                 </div>
             </div>
