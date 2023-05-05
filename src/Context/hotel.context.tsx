@@ -18,9 +18,11 @@ export type THotel = {
     zipCode: string,
     phone_number: string,
     city: string,
-    comments: { id: number, commentary: string }[],
+    comments: { id: number, clientName: string, commentary: string, hotelId: number }[],
     rooms: TRoom [],
-    reservations: { id: number, reference: string, arrival_date: string, departure_date: string, totalPrice: number}[]
+    reservations: { id: number, reference: string, arrival_date: string, departure_date: string, totalPrice: number}[],
+    map: Function,
+    find: Function
 }
 
 export type TRoom = {

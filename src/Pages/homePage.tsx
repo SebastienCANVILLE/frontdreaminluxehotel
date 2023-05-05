@@ -9,6 +9,7 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../Context/auth.context';
 import Profil from '../Components/Profil/profil';
 import './homePage.css'
+import Comment from '../Components/Comment/comment';
 
 export default function HomePage() {
 
@@ -24,6 +25,7 @@ export default function HomePage() {
             <div>               
 
                 <Navbar setPage={setPage} setProfil={setProfil}></Navbar>
+                <Comment></Comment>
                 <Register></Register>
                 <Login></Login>
                 {profil === true && user?.access_token && <Profil setProfil={setProfil}></Profil>}

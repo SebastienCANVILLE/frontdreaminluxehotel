@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { THotel } from '../../Context/hotel.context';
 import RoomCard from '../Room_Card/roomCard';
 import './hotelCard.css'
@@ -54,8 +53,7 @@ export default function HotelCard(props: { hotel: THotel }) {
             <div className="card-details">
                 <div className="row">
 
-                    <h2 className='titleRoom d-flex justify-content-center text-center mt-5'>
-                        --- Nos chambres ---</h2>
+                    <h2 className='titleRoom d-flex justify-content-center text-center mt-5'>Les chambres</h2>
 
                     {/* récupération des props et du nouveau typage de Troom inclus dans le typage Thotel */}
                     {props.hotel.rooms.map((item) =>
@@ -64,7 +62,7 @@ export default function HotelCard(props: { hotel: THotel }) {
                         </div>)}
 
                     {/* Title Contact */}
-                    <h5 className='d-flex justify-content-center text-center mt-4'>Contactez-nous :</h5>
+                    <h5 className='contact d-flex justify-content-center text-center mt-4'>Contactez-nous :</h5>
 
                     {/* <P> Contact */}
                     <div className="col-12 d-flex justify-content-center text-center">

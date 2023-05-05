@@ -1,8 +1,7 @@
 .nav-title{    
     color: #BC9E56 ;
     display: flex;
-    align-items: center;
-    
+    align-items: center;    
 }
 
 .offcanvas-title{    
@@ -11,8 +10,7 @@
 
 .navbar{    
     background-color: #FFFFFF ;
-    border-bottom: 2px solid;
-    
+    border-bottom: 2px solid;    
 }
 
 .nav-item{    
@@ -22,3 +20,4 @@
 #deconnexion{    
     color:crimson ;
 }
+

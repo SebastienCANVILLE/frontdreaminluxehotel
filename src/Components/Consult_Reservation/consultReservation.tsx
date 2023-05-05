@@ -40,10 +40,15 @@ export default function ConsultReservation(props: TReservation) {
                 <td scope="col">n° {reservation.reference}</td>
                 <td scope="col">{reservation.arrival_date}</td>
                 <td scope="col">{reservation.departure_date}</td>
-                <td scope="col">{reservation.totalPrice} €</td>
+                <td scope="col">{reservation.totalPrice} {/* € */}
+                <span className="material-symbols-outlined px-0">euro</span></td>
 
-                <button onClick={deleteReservation} type="button" className="btn btn-outline-danger me-2 mb-2 mt-2 px-3 align-items-center" data-mdb-ripple-color="dark" >
-                    <i className="bi bi-trash3"></i>
+                <button onClick={deleteReservation} type="button" className="btn btn-outline me-2 mb-2 mt-2 px-3 align-items-center" data-mdb-ripple-color="dark" title="Supprimer la réservation" >
+                    <span id="deleteRes" className="material-symbols-outlined">delete</span>
+                </button>
+
+                <button type="button" id="addComment" className="btn btn-outline me-2 mb-2 mt-2 px-3 align-items-center" data-bs-toggle="modal" data-bs-target="#modalcomment" title="Commenter votre séjour">
+                    <span className="material-symbols-outlined">heart_check</span>
                 </button>
 
             </tr>

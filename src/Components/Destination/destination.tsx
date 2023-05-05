@@ -35,8 +35,7 @@ export default function Destination() {
 
             <div className="container-fluid pb-5 pe-0 ps-0">
 
-                <h1 className="destination-title text-center mt-3 mb-3 px-0" id="staticBackdropLabel">
-                    ----- Nos destinations -----</h1>
+                <h1 className="destination-title text-center mt-3 mb-3 px-0" id="staticBackdropLabel">Nos destinations de rêves</h1>
 
                 {/* <!-- Carousel : BTN ----> hotelCard.tsx*/}
                 <div id="carouselExample" className="carousel slide">

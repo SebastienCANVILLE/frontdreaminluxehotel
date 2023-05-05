@@ -15,11 +15,11 @@ export default function Navbar(props: TProps) {
     const logOut = () => { setUser(null) };     // const de déconnexion
 
     const showReservation = () => {             // affiche les réservations
-        props.setPage(true);            
+        props.setPage(true);
     }
 
     const showProfil = () => {                  // affiche le profil
-        props.setProfil(true);            
+        props.setProfil(true);
     }
 
 
@@ -64,13 +64,6 @@ export default function Navbar(props: TProps) {
                         <div className="offcanvas-body">
 
                             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-
-                                {/* <!-- Button My Destinations --> */} {/*-------------------------- A VOIR ----------------------
-                                <li className="nav-item">
-                                    <button type="button" className="btn btn-link text-black" data-bs-toggle="modal" data-bs-target="#modaldestination">
-                                        Nos destinations
-                                    </button>
-                                </li>*/}
 
                                 {/* <!-- Buttom Reservation --> */}
                                 <li className="nav-item">

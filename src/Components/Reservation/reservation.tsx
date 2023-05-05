@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { THotel, TRoom } from '../../Context/hotel.context';
+import { HotelContext, THotel, TRoom } from '../../Context/hotel.context';
 import { AuthContext } from '../../Context/auth.context';
 import './reservation.css'
 
@@ -26,6 +26,8 @@ export default function Reservation() {
     const [hotels, setHotels] = useState<THotel[] | null>(null);
     const [rooms, setRooms] = useState<TRoom[] | null>(null);
 
+    const { setHotel } = useContext(HotelContext); //<---------------hôtel context
+
     const [references, setReferences] = useState("");
     const [hotelInput, setHotelInput] = useState(0); // ce useState sert uniquement à remettre la valeur de l'input hotel à l'initiale après réservation avec la fontion resetInput()
     const [roomIdInput, setRoomIdInput] = useState(0);
@@ -47,6 +49,7 @@ export default function Reservation() {
             const responseJson = await response.json();
             console.log(responseJson);
             setHotels(responseJson.data);
+            setHotel(responseJson.data); //<---------------hôtel context
         };
         getHotels()
     }, []);
@@ -134,10 +137,10 @@ export default function Reservation() {
             const response = await fetch('http://localhost:8000/reservations', requestOptions)
             const responseJson = await response.json();
             console.log("RESERVATION", responseJson);
-            
+
             if (responseJson.statusCode === 201) {
                 user!.user.reservations = [...user!.user.reservations, responseJson.data]
-                setUser({...user!});
+                setUser({ ...user! });
                 resetInput()
                 alert("Réservation créé avec succès");
             } else if (responseJson.statusCode === 401) {
@@ -245,11 +248,11 @@ export default function Reservation() {
         <>
 
             {/* <!-- Buttom Trigger Modal --> */}
-            <div className="container-fluid btn-Res d-flex justify-content-center">
+            {/*  <div className="container-fluid btn-Res d-flex justify-content-center">
                 <button type="button" className="btn-reservation btn align-items-center" data-bs-toggle="modal" data-bs-target="#modalreservation">
                     Réservez-ici
                 </button>
-            </div>
+            </div> */}
 
             {/* <!-- Modal --> */}
             <div className="modal fade" id="modalreservation" tabIndex={-1} data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -314,14 +317,16 @@ export default function Reservation() {
 
                                 {/* <!-- P/disponibility --> */}
                                 <div className=" col-md-6 col-12 mb-3 mt-1 text-center">
-                                    <label className="labelRegister" htmlFor="regDisponibility">Disponibilité </label>
+                                    <label className="labelRegister mt-1" htmlFor="regDisponibility">Disponibilité </label>
                                     <p className={colorText} id="regDisponibility" aria-label="disponibilité de la chambre">{check}</p>
                                 </div>
 
                                 {/* <!-- P/totalePrice  --> */}
                                 <div className=" col-md-6 col-12 mb-3 mt-1 text-center">
                                     <label className="labelRegister" htmlFor="regPrice">Prix du séjour</label>
-                                    <p id="regPrice" aria-label="prix du séjour">{checkPrice} €</p>
+                                    <p id="regPrice" aria-label="prix du séjour">{checkPrice} {/* € */}
+                                    <span className="material-symbols-outlined px-0">euro</span>
+                                    </p>
                                 </div>
 
                             </div>

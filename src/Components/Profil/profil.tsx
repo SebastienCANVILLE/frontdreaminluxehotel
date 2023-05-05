@@ -22,7 +22,7 @@ export default function Profil(props: TProps) { // props pour l'utilisation de l
                 <i className="bi bi-person-circle fs-1"></i>
             </div>
 
-            <div className="body">
+            <div className="body mt-4">
                 <ProfilComponent></ProfilComponent>
             </div>
 

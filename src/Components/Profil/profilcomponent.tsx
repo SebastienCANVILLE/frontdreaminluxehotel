@@ -61,10 +61,10 @@ export default function ProfilComponent() {
 
         if (responseJson.statusCode === 200) {
             const updatedUser = { ...user!.user, ...responseJson.data }
-            setUser({ ...user!, user: updatedUser  })
+            setUser({ ...user!, user: updatedUser })
             setShowInput(false)
             alert("Modification prise en compte");
-        }else {
+        } else {
             return
         }
 
@@ -102,7 +102,7 @@ export default function ProfilComponent() {
     return (
 
 
-        <div className="text-center mt-2" id="profil-name">
+        <div className="text-center mt-3" id="profil-name">
 
             <h3>{user?.user.civility} {user?.user.lastname} {user?.user.firstname}</h3>
 
@@ -138,7 +138,7 @@ export default function ProfilComponent() {
 
             </div >
 
-            <div className="text-center mt-2" id="profil-name">
+            <div className="text-center mt-3" id="profil-name">
 
                 <div className="col">
                     <h5>{user?.user.adress_line}</h5>
@@ -181,7 +181,7 @@ export default function ProfilComponent() {
             </div>
 
 
-            <div className="text-center mt-2" id="profil-name">
+            <div className="text-center mt-3" id="profil-name">
                 <div className="col">
                     <h5>{user?.user.email}</h5>
                     <h5>{user?.user.phone_number}</h5>
@@ -207,17 +207,23 @@ export default function ProfilComponent() {
             </div>
 
             {showInput &&
-                <div className="mt-3 align-items-center">
-                    <button type="button" className="btn btn-success me-1" onClick={patchProfil}>Valider</button>
-                    <button type="button" className="btn btn-dark ms-1" onClick={closeUpdate}>Annuler</button>
+                <div className="mt-4 align-items-center">
+
+                    <button type="button" className="btn btn-outline me-1" title="Valider les modifications" onClick={patchProfil}>
+                        <span id= "validate" className="material-symbols-outlined">check_circle</span>
+                    </button>
+
+                    <button type="button" className="btn btn-outline ms-1"  title="Annuler les modifications" onClick={closeUpdate}>
+                    <span id= "cancel" className="material-symbols-outlined">cancel</span>
+                    </button>
                 </div>}
 
-            <div className="mt-3 align-items-center">
-                <button type="button" className="btn btn-warning " onClick={update}>Modifier le compte</button>
+            <div className="mt-5 align-items-center">
+                <button type="button" className="btn btn-outline-warning" onClick={update}>Modifier le compte</button>
             </div>
 
             <div className="mt-3 align-items-center">
-                <button type="button" className="btn btn-danger" onClick={deleteProfil}>Supprimer le compte</button>
+                <button type="button" className="btn btn-outline-danger" onClick={deleteProfil}>Supprimer le compte</button>
             </div>
 
         </div>

@@ -3,3 +3,11 @@
     font-size: 25px; 
 }
 
+#validate{
+    color:green !important;
+}
+
+#cancel{
+    color:black !important;
+}
+
