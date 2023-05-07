@@ -2,6 +2,8 @@ import { useContext } from 'react';
 import { AuthContext } from '../../Context/auth.context';
 import './consultReservation.css'
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type TReservation = {
     reservation: { id: number, reference: string, arrival_date: string, departure_date: string, totalPrice: number },
@@ -28,6 +30,7 @@ export default function ConsultReservation(props: TReservation) {
 
         if (responseJson.statusCode === 200) {
             props.del(props.reservation.id)
+            toast.success('Annulation de votre réservation prise en compte :-(', { position: "top-center", autoClose: 2000 });
         }
     }
 

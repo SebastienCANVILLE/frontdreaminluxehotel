@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import './register.css'
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 // permet le typage de la partie body
 type TProfilRegister = {
     email: string,
@@ -72,19 +75,19 @@ export default function Register() {
             //si nous avons la réponse json du register dans la console, alors nous faisons un reset des input du formulaire
             if (responseJson.statusCode === 201) {
                 resetInput()
-                alert("Compte créé avec succès");
-            } else if (responseJson.statusCode === 400) {
-                alert("Votre mot de passe ne correspond pas au critère de sécurité");
-            } else if (responseJson.statusCode === 409) {
-                alert("Les mots de passe doivent être identiques");
-            } else if (responseJson.message === "L'Email est déjà utilisé") {
-                alert(responseJson.message);
+                toast.success("Compte créé avec succès", { position: "top-center", autoClose: 2000 });
+            }  else if (responseJson.statusCode === 400 && responseJson.message.includes('password is not strong enough')) {
+                toast.warn("Votre mot de passe ne correspond pas aux critères de sécurité : Minimum 8 caractères, 1 majuscule, 1 chiffre et 1symbole", { position: "top-center", autoClose: 2000 });
+            }  else if (responseJson.statusCode === 409) {
+                toast.warn('Les mots de passe doivent être identiques', { position: "top-center", autoClose: 2000 });
+            } else if (responseJson.statusCode === 400 && responseJson.message === "L'Email est déjà utilisé"  ) {
+                toast.warn(responseJson.message, { position: "top-center", autoClose: 2000 });
             } else {
                 return
             }
 
         } else {
-            alert("Veuillez renseigner tous les champs");
+            toast.warn("Veuillez renseigner tous les champs", { position: "top-center", autoClose: 2000 });
             return
         }
 
@@ -207,14 +210,14 @@ export default function Register() {
                                 {/* <!-- Password input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regPassword">Mot de passe</label>
-                                    <input type="password" className="form-control" id="regPassword" placeholder="Min 8 caract, 1Maj, 1chiffre, 1symbole" aria-label="choisissez mot de passe"
+                                    <input type="password" className="form-control" id="regPassword" title="Minimum 8 caractères, 1 majuscule, 1 chiffre et 1symbole" aria-label="choisissez mot de passe"
                                         value={passwordInput} onChange={(event) => setPasswordInput(event.target.value)} required></input>
                                 </div>
 
                                 {/* <!-- Password confirm input --> */}
                                 <div className="form-outline col-md-4 col-12 mb-3 mt-1">
                                     <label htmlFor="regPasswordConfirm">Confirmation mot de passe</label>
-                                    <input type="password" className="form-control" id="regPasswordConfirm" aria-label="confirmer votre mot de passe"
+                                    <input type="password" className="form-control" id="regPasswordConfirm" title="Confirmez votre mot de passe" aria-label="confirmer votre mot de passe"
                                         value={passwordConfirmInput} onChange={(event) => setPasswordConfirmInput(event.target.value)} required></input>
                                 </div>
 

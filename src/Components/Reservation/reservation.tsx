@@ -3,6 +3,9 @@ import { HotelContext, THotel, TRoom } from '../../Context/hotel.context';
 import { AuthContext } from '../../Context/auth.context';
 import './reservation.css'
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 /**
  * @function Reservation
@@ -29,14 +32,16 @@ export default function Reservation() {
     const { setHotel } = useContext(HotelContext); //<---------------hôtel context
 
     const [references, setReferences] = useState("");
-    const [hotelInput, setHotelInput] = useState(0); // ce useState sert uniquement à remettre la valeur de l'input hotel à l'initiale après réservation avec la fontion resetInput()
+    const [hotelInput, setHotelInput] = useState(0); // Sert uniquement à remettre la valeur de l'input hotel à l'initiale après réservation avec la fontion resetInput()
     const [roomIdInput, setRoomIdInput] = useState(0);
     const [arrivalDateInput, setArrivalDateInput] = useState<string>("");
     const [departureDateInput, setDepartureDateInput] = useState<string>("");
-    const [roomPrice, setRoomPrice] = useState<number>(0); //<---------------room price
+    const [roomPrice, setRoomPrice] = useState<number>(0); // room price
 
     const [check, setCheck] = useState<string>();
     const [checkPrice, setCheckPrice] = useState<number>();
+    const [showInput, setShowInput] = useState<boolean>(false); //bouton réserver
+
 
     useEffect(() => {
         async function getHotels() {
@@ -112,7 +117,7 @@ export default function Reservation() {
         if (arrivalDateInput !== "" && departureDateInput !== "" && roomIdInput !== 0) {
 
             if (new Date(arrivalDateInput) < new Date(Date.now())) {
-                alert("La date choisie ne peut pas être antérieure à celle aujourd'hui");
+                toast.warn("La date choisie ne peut pas être antérieure à celle aujourd'hui", { position: "top-center", autoClose: 2000 });
                 return
             }
 
@@ -142,19 +147,22 @@ export default function Reservation() {
                 user!.user.reservations = [...user!.user.reservations, responseJson.data]
                 setUser({ ...user! });
                 resetInput()
-                alert("Réservation créé avec succès");
+                setShowInput(false) // bouton réserver
+                toast.success("Réservation créé avec succès", { position: "top-center", autoClose: 2000 });
             } else if (responseJson.statusCode === 401) {
-                alert("Veuillez vous connecter avant de valider votre réservation");
+                toast.error("Veuillez vous connecter avant de valider votre réservation", { position: "top-center", autoClose: 2000 });
             } else if (responseJson.message === "La date de départ doit être supérieure à la date d'arrivée") {
-                alert(responseJson.message);
+                setShowInput(false) // bouton réserver
+                toast.warn(responseJson.message, { position: "top-center", autoClose: 2000 });
             } else if (responseJson.message === "La chambre n'est pas disponible pour ces dates") {
-                alert(responseJson.message);
+                setShowInput(false) // bouton réserver
+                toast.error(responseJson.message, { position: "top-center", autoClose: 2000 });
             } else {
                 return
             }
 
-        } else {
-            alert("Veuillez renseigner tous les champs");
+        } else {            
+            toast.warn("Veuillez renseigner tous les champs", { position: "top-center", autoClose: 2000 });
             return
         }
 
@@ -162,14 +170,12 @@ export default function Reservation() {
 
     // function qui reset les imputs du modal reservation
     async function resetInput() {
-
         setReferences("")
         setHotelInput(0)
         setRoomIdInput(0)
         setArrivalDateInput("")
         setDepartureDateInput("")
         setRoomPrice(0)
-
     }
 
     async function checkDisponibility(event: { preventDefault: () => void; }) {
@@ -186,7 +192,7 @@ export default function Reservation() {
         if (arrivalDateInput !== "" && departureDateInput !== "" && roomIdInput !== 0) {
 
             if (new Date(arrivalDateInput) < new Date(Date.now())) {
-                alert("La date choisie ne peut pas être antérieure à celle aujourd'hui");
+                toast.warn("La date choisie ne peut pas être antérieure à celle aujourd'hui", { position: "top-center", autoClose: 2000 });
                 return
             }
 
@@ -211,16 +217,18 @@ export default function Reservation() {
             console.log("CHECK", responseJson);
 
             if (responseJson.statusCode === 201) {
+                setShowInput(true) // bouton réserver
                 setCheck("La chambre est disponible")
                 setCheckPrice(totalPrice)
             } else if (responseJson.statusCode === 400) {
+                setShowInput(false)// bouton réserver
                 setCheck("Indisponible aux dates demandées")
             } else {
                 return
             }
 
         } else {
-            alert("Veuillez renseigner tous les champs");
+            toast.warn("Veuillez renseigner tous les champs", { position: "top-center", autoClose: 2000 });
             return
         }
 
@@ -246,13 +254,6 @@ export default function Reservation() {
     return (
 
         <>
-
-            {/* <!-- Buttom Trigger Modal --> */}
-            {/*  <div className="container-fluid btn-Res d-flex justify-content-center">
-                <button type="button" className="btn-reservation btn align-items-center" data-bs-toggle="modal" data-bs-target="#modalreservation">
-                    Réservez-ici
-                </button>
-            </div> */}
 
             {/* <!-- Modal --> */}
             <div className="modal fade" id="modalreservation" tabIndex={-1} data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -333,7 +334,7 @@ export default function Reservation() {
 
                             <div className="modal-footer">
                                 <button onClick={checkDisponibility} className="btn btn-primary" >Vérifier</button>
-                                <button type="submit" className="btn btn-connect" >Réserver</button>
+                                {showInput && <button type="submit" className="btn btn-connect" >Réserver</button>}
                             </div>
 
                         </form>

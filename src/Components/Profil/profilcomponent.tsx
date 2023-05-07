@@ -2,8 +2,10 @@ import { useContext, useState } from 'react'
 import { AuthContext } from '../../Context/auth.context'
 import './profil.css'
 
-type TCompte = {
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+type TCompte = {
     email?: string,
     civility?: string,
     firstname?: string,
@@ -13,9 +15,14 @@ type TCompte = {
     city?: string,
     country?: string,
     phone_number?: string
-
 }
 
+/**  
+    * @function ProfilComponent 
+    * 
+    * Composant d'affichage et de gestion du profil utilisateur
+    * 
+   */
 export default function ProfilComponent() {
 
     const { user, setUser } = useContext(AuthContext);
@@ -32,6 +39,13 @@ export default function ProfilComponent() {
 
     const [showInput, setShowInput] = useState(false);
 
+
+    /**  
+     * @function patchProfil 
+     * 
+     * Modification du profil utilisateur
+     * 
+    */
     async function patchProfil() {
 
         const body: TCompte = {
@@ -63,7 +77,8 @@ export default function ProfilComponent() {
             const updatedUser = { ...user!.user, ...responseJson.data }
             setUser({ ...user!, user: updatedUser })
             setShowInput(false)
-            alert("Modification prise en compte");
+            toast.success('Vos informations ont bien été prise compte, mise à jour à votre prochaine connexion',
+                { position: "top-center", autoClose: 2000 });
         } else {
             return
         }
@@ -79,6 +94,12 @@ export default function ProfilComponent() {
         setShowInput(false)
     }
 
+    /**  
+     * @function deleteProfil 
+     * 
+     * Suppression du profil utilisateur
+     * 
+    */
     async function deleteProfil() {
 
         const requestOptions = {
@@ -94,13 +115,14 @@ export default function ProfilComponent() {
 
         if (responseJson.statusCode === 200) {
             setUser(null) // pour que l'utilisateur se logout automatiquement après suppression
-            alert("Votre compte a bien été supprimé")
-        };
+            toast.success('Votre compte a été supprimé :-(', { position: "top-center", autoClose: 2000 });
+        } else {
+            return
+        }
 
     }
 
     return (
-
 
         <div className="text-center mt-3" id="profil-name">
 
@@ -210,11 +232,11 @@ export default function ProfilComponent() {
                 <div className="mt-4 align-items-center">
 
                     <button type="button" className="btn btn-outline me-1" title="Valider les modifications" onClick={patchProfil}>
-                        <span id= "validate" className="material-symbols-outlined">check_circle</span>
+                        <span id="validate" className="material-symbols-outlined">check_circle</span>
                     </button>
 
-                    <button type="button" className="btn btn-outline ms-1"  title="Annuler les modifications" onClick={closeUpdate}>
-                    <span id= "cancel" className="material-symbols-outlined">cancel</span>
+                    <button type="button" className="btn btn-outline ms-1" title="Annuler les modifications" onClick={closeUpdate}>
+                        <span id="cancel" className="material-symbols-outlined">cancel</span>
                     </button>
                 </div>}
 

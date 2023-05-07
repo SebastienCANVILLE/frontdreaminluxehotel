@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import HomePage from './Pages/homePage';
 import { AuthContext, Tuser } from './Context/auth.context';
 import { HotelContext, THotel } from './Context/hotel.context';
 import './App.css';
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
 
@@ -15,6 +18,8 @@ export default function App() {
       <HotelContext.Provider value={{ hotel: hotel, setHotel: setHotel }}>
 
         <HomePage></HomePage>
+        
+        <ToastContainer />
 
       </HotelContext.Provider>
     </AuthContext.Provider>

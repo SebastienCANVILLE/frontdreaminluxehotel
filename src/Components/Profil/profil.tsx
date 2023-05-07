@@ -1,14 +1,11 @@
-import { useContext } from 'react'
-import { AuthContext } from '../../Context/auth.context'
+
 import './profil.css'
 import ProfilComponent from './profilcomponent'
 
 type TProps = {
     setProfil: Function
 }
-export default function Profil(props: TProps) { // props pour l'utilisation de la fermeture du profilvia le bouton
-
-    const { user, setUser } = useContext(AuthContext);
+export default function Profil(props: TProps) { // props pour l'utilisation de la fermeture du profil via le bouton
 
     const closeMyProfil = () => { props.setProfil(false) } // ferme le composant
 

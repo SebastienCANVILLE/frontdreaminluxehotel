@@ -3,6 +3,9 @@ import './comment.css'
 import { AuthContext } from '../../Context/auth.context';
 import { HotelContext, THotel } from '../../Context/hotel.context';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 // permet le typage de la partie body
 type TCommentRegister = {
     clientName: string,
@@ -69,13 +72,13 @@ export default function Comment() {
 
             if (responseJson.statusCode === 201) {
                 resetInput()
-                alert("Commentaire créé avec succès");
+                toast.success("Commentaire créé avec succès", { position: "top-center", autoClose: 2000 });
             } else {
                 return
             }
 
         } else {
-            alert("Veuillez renseigner tous les champs");
+            toast.warn("Veuillez renseigner tous les champs", { position: "top-center", autoClose: 2000 });
             return
         }
 

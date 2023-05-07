@@ -2,6 +2,9 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../../Context/auth.context';
 import './login.css'
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 type TProfilLog = {
     email: string;
     password: string;
@@ -32,17 +35,13 @@ export default function Login() {
 
         console.log("RESPONSE", response, "RESPONSEJSON", responseJson);
 
-
         //si la reponse renvoi l' access_token de l'user connecté, alors on envoi la donnée dans le context pour la réutiliser ailleur.
         if (responseJson.access_token) {
             auth.setUser({ ...responseJson });
             resetInputLog()
-            alert("Connexion réussi");
-
-        } else if (responseJson.statusCode === 406) {
-            alert("Compte inexistant ou données mal renseignées");
-        } else if (responseJson.statusCode === 401) {
-            alert("Compte inexistant ou données mal renseignées");
+            toast.success('Connexion réussi, bienvenue', { position: "top-center", autoClose: 2000 });
+        } else if (responseJson.statusCode === 406 || responseJson.statusCode === 401) {            
+            toast.error('Compte inexistant ou données mal renseignées !', { position: "top-center", autoClose: 5000 });
         } else {
             return
         }

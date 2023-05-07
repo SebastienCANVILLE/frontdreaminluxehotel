@@ -2,6 +2,9 @@ import { useContext } from "react";
 import { TComments } from "../../Context/hotel.context";
 import { AuthContext } from "../../Context/auth.context";
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export function CommentView(props: { del(id: number): unknown; comments: TComments }) {
 
     const { user } = useContext(AuthContext)
@@ -21,7 +24,7 @@ export function CommentView(props: { del(id: number): unknown; comments: TCommen
 
         if (responseJson.statusCode === 200) {
             props.del(props.comments.id)
-            alert("Commentaire supprimé")
+            toast.success("Commentaire supprimé", { position: "top-center", autoClose: 2000 });
         }
     }
 

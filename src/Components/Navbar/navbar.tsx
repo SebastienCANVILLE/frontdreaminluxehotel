@@ -2,28 +2,33 @@ import { useContext } from 'react';
 import { AuthContext } from '../../Context/auth.context';
 import './navbar.css'
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 type TProps = {
     setPage: Function,
     setProfil: Function
 }
-
 
 export default function Navbar(props: TProps) {
 
     const { user, setUser } = useContext(AuthContext);
 
     // const de déconnexion
-    const logOut = () => { setUser(null) };
+    const logOut = () => {
+        setUser(null)
+        toast.success('Déconnexion réussi, à bientôt', { position: "top-center", autoClose: 2000 });
+    };
 
     // affiche le composant des réservations
     const showReservation = () => {
         props.setPage(true);
-    }
+    };
 
     // affiche le composant profil
     const showProfil = () => {
         props.setProfil(true);
-    }
+    };
 
 
     return (
