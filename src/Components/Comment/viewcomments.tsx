@@ -20,8 +20,6 @@ export function CommentView(props: { del(id: number): unknown; comments: TCommen
         const response = await fetch(`http://localhost:8000/comments/${props.comments.id}`, requestOptions)
         const responseJson = await response.json()
 
-        console.log("Success!", responseJson);
-
         if (responseJson.statusCode === 200) {
             props.del(props.comments.id)
             toast.success("Commentaire supprimé", { position: "top-center", autoClose: 2000 });

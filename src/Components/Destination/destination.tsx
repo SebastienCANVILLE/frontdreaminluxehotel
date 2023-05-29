@@ -23,7 +23,6 @@ export default function Destination() {
 
             const response = await fetch('http://localhost:8000/hotels', requestOptions)
             const responseJson = await response.json();
-            console.log(responseJson);
             setHotel(responseJson.data);
         };
         getHotels()

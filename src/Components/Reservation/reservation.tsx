@@ -141,7 +141,6 @@ export default function Reservation() {
 
             const response = await fetch('http://localhost:8000/reservations', requestOptions)
             const responseJson = await response.json();
-            console.log("RESERVATION", responseJson);
 
             if (responseJson.statusCode === 201) {
                 user!.user.reservations = [...user!.user.reservations, responseJson.data]
@@ -214,7 +213,6 @@ export default function Reservation() {
 
             const response = await fetch('http://localhost:8000/reservations/check', requestOptions)
             const responseJson = await response.json();
-            console.log("CHECK", responseJson);
 
             if (responseJson.statusCode === 201) {
                 setShowInput(true) // bouton réserver

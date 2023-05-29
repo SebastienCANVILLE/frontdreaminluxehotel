@@ -33,8 +33,6 @@ export default function Login() {
         const response = await fetch('http://localhost:8000/auth/login', requestOptions);
         const responseJson = await response.json();
 
-        console.log("RESPONSE", response, "RESPONSEJSON", responseJson);
-
         //si la reponse renvoi l' access_token de l'user connecté, alors on envoi la donnée dans le context pour la réutiliser ailleur.
         if (responseJson.access_token) {
             auth.setUser({ ...responseJson });

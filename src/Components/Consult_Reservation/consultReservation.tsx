@@ -26,8 +26,6 @@ export default function ConsultReservation(props: TReservation) {
         const response = await fetch(`http://localhost:8000/reservations/${props.reservation.id}`, requestOptions)
         const responseJson = await response.json()
 
-        console.log("Success!", responseJson);
-
         if (responseJson.statusCode === 200) {
             props.del(props.reservation.id)
             toast.success('Annulation de votre réservation prise en compte :-(', { position: "top-center", autoClose: 2000 });

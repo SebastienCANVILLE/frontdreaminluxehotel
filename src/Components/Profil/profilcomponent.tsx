@@ -71,7 +71,6 @@ export default function ProfilComponent() {
 
         const response = await fetch(`http://localhost:8000/users/`, requestOptions)
         const responseJson = await response.json()
-        console.log(responseJson)
 
         if (responseJson.statusCode === 200) {
             const updatedUser = { ...user!.user, ...responseJson.data }
