@@ -22,9 +22,19 @@ function deleteComment(id: number) {
 const comment = user!.user.comments.filter(item => item.id !== id);
     user!.user.comments = comment;
     setUser({ ...user!});
-    /* const commentAdmin = hotel!.comments.filter(item => item.id !== id);
-    hotel!.comments = commentAdmin;
-    setHotel({ ...hotel!}); */
+console.log(hotel);
+    const h = hotel!.find(item => item.id === props.hotels.id)
+
+    if(!h){        
+        return
+    }
+    const commentAdmin = h?.comments.filter(item => item.id !== id);
+    h.comments = commentAdmin;
+    
+    setHotel([...hotel!]);
+    console.log(hotel);
+    
+    
 }
 
     return (

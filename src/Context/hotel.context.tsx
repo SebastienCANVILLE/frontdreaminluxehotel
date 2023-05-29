@@ -40,8 +40,8 @@ export type TComments = {
 }
 
 export interface IHotelContext {
-    hotel: THotel | null;
-    setHotel: (hotel: THotel | null) => void;
+    hotel: THotel[] | null;
+    setHotel: (hotel: THotel[] | null) => void;
 }
 
 export const HotelContext = createContext<IHotelContext>({

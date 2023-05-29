@@ -17,7 +17,7 @@ export default function Navbar(props: TProps) {
     // const de déconnexion
     const logOut = () => {
         setUser(null)
-        toast.success('Déconnexion réussi, à bientôt', { position: "top-center", autoClose: 2000 });
+        toast.success('Déconnexion réussie, à bientôt', { position: "top-center", autoClose: 2000 });
     };
 
     // affiche le composant des réservations

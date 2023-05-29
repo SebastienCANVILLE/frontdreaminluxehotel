@@ -39,7 +39,7 @@ export default function Login() {
         if (responseJson.access_token) {
             auth.setUser({ ...responseJson });
             resetInputLog()
-            toast.success('Connexion réussi, bienvenue', { position: "top-center", autoClose: 2000 });
+            toast.success('Connexion réussie, bienvenue', { position: "top-center", autoClose: 2000 });
         } else if (responseJson.statusCode === 406 || responseJson.statusCode === 401) {            
             toast.error('Compte inexistant ou données mal renseignées !', { position: "top-center", autoClose: 5000 });
         } else {

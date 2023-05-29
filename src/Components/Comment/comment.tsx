@@ -15,12 +15,13 @@ type TCommentRegister = {
 
 export default function Comment() {
 
-    const { user, setUser } = useContext(AuthContext)
-    const { hotel, setHotel } = useContext(HotelContext) //<---------------hôtel context
+    const { user } = useContext(AuthContext)
+    const { hotel } = useContext(HotelContext) // hotel context
 
     const [clientNameInput, setClientNameInput] = useState("")
     const [commentaryInput, setCommentaryInput] = useState("")
     const [hotelInput, setHotelInput] = useState(0);
+    
 
 
     /**  
@@ -68,8 +69,6 @@ export default function Comment() {
             const response = await fetch('http://localhost:8000/comments', requestOptions);
             const responseJson = await response.json();
 
-            console.log(response, responseJson);
-
             if (responseJson.statusCode === 201) {
                 resetInput()
                 toast.success("Commentaire créé avec succès", { position: "top-center", autoClose: 2000 });
@@ -89,7 +88,6 @@ export default function Comment() {
         setCommentaryInput("")
         setHotelInput(0)
     }
-
 
     return (
         <>

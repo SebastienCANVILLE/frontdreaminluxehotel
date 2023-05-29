@@ -108,10 +108,10 @@ export default function Reservation() {
         event.preventDefault()
 
         let body: TProfilReservation;
-        let totalPrice: number; //<---------------room price
+        let totalPrice: number; //room price
 
-        const numberOfNights = Math.ceil((new Date(departureDateInput).getTime() - new Date(arrivalDateInput).getTime()) / (1000 * 3600 * 24)); //<---------------room price
-        totalPrice = numberOfNights * roomPrice; //<---------------room price
+        const numberOfNights = Math.ceil((new Date(departureDateInput).getTime() - new Date(arrivalDateInput).getTime()) / (1000 * 3600 * 24)); //room price
+        totalPrice = numberOfNights * roomPrice; //room price
 
         // condition qui vérifie que les input ne soit pas undefined en front et return le body si les conditions sont remplies
         if (arrivalDateInput !== "" && departureDateInput !== "" && roomIdInput !== 0) {
@@ -306,14 +306,14 @@ export default function Reservation() {
                                 <div className="form-outline col-md-6 col-12 mb-3 mt-1">
                                     <label htmlFor="regArrival">Votre date d'arrivée</label>
                                     <input id="regArrival" type="date" className="form-control" aria-label="choisissez votre date d'arrivée" min={formatDate(new Date(Date.now()))}
-                                        value={arrivalDateInput} onChange={(event) => setArrivalDateInput(event.target.value)} ></input> {/*onChange={(event) => {setArrivalDateInput(event.target.value); checkDisponibility(event)}} */}
+                                        value={arrivalDateInput} onChange={(event) => setArrivalDateInput(event.target.value)} ></input>
                                 </div>
 
                                 {/* <!-- Departure input --> */}
                                 <div className="form-outline col-md-6 col-12 mb-3 mt-1">
                                     <label htmlFor="regDeparture">Votre date de départ</label>
                                     <input id="regDeparture" type="date" className="form-control" aria-label="choisissez votre date de départ" min={formatDate(new Date(arrivalDateInput))}
-                                        value={departureDateInput} onChange={(event) => setDepartureDateInput(event.target.value)} ></input>{/* onChange={(event) => {setDepartureDateInput(event.target.value); checkDisponibility(event)}} */}
+                                        value={departureDateInput} onChange={(event) => setDepartureDateInput(event.target.value)} ></input>
                                 </div>
 
                                 {/* <!-- P/disponibility --> */}

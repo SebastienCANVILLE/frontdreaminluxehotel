@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function App() {
 
   const [user, setUser] = useState<Tuser | null>(null);
-  const [hotel, setHotel] = useState<THotel | null>(null);
+  const [hotel, setHotel] = useState<THotel[] | null>(null);
 
   return (
 

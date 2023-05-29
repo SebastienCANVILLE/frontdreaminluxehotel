@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { THotel } from '../../Context/hotel.context';
+import { useContext, useEffect } from 'react';
+import { HotelContext } from '../../Context/hotel.context';
 import HotelCard from '../Hotel_Card/hotelCard';
 import './destination.css'
 
@@ -12,9 +12,8 @@ import './destination.css'
  * * 
  */
 export default function Destination() {
-
-    const [hotels, setHotels] = useState<THotel[] | null>(null);
-
+ 
+    const {hotel, setHotel} = useContext(HotelContext)
     useEffect(() => {
         async function getHotels() {
             const requestOptions = {
@@ -25,10 +24,10 @@ export default function Destination() {
             const response = await fetch('http://localhost:8000/hotels', requestOptions)
             const responseJson = await response.json();
             console.log(responseJson);
-            setHotels(responseJson.data);
+            setHotel(responseJson.data);
         };
         getHotels()
-    }, []);
+    }, [hotel]);
 
 
     return (
@@ -44,7 +43,7 @@ export default function Destination() {
 
                         {/* // item = un element du tableau soit un hotel en entier (id, name ect...) et index = 0/1/2 du tableau */}
                         {/* <!-- Hotel CArd --> */}
-                        {hotels?.map((item, index) =>
+                        {hotel?.map((item, index) =>
                             <div className={`carousel-item ${index === 0 ? "active" : ""}`} key={item.id}>
                                 <HotelCard hotels={item}></HotelCard>
                             </div>
